@@ -1,34 +1,37 @@
 <template>
   <div class="steps-landing">
     <img src="@/assets/logo.svg" @click="console" class="logo" />
-    <div @click.ctrl="openContextMenu" class="container" ref="container">
-      <component
-        v-for="items in elements"
-        :key="items.id"
-        :is="items.type"
-        :placeholder="items.placeholder"
-        :background="items.background"
-        :positionY="items.positionY"
-        :positionX="items.positionX"
-      />
+    <div
+      @contextmenu.prevent="openContextMenu"
+      class="container"
+      ref="container"
+    >
+      <text-input></text-input>
+      <child-input></child-input>
+      <parent-input></parent-input>
+      <note-input></note-input> 
     </div>
-    <context-menu class="contextMenu" :display="showContextMenu" ref="menu">
-      <li @click="appendComponent('parent', $event)">parent</li>
-      <li @click="appendComponent('child', $event)">child</li>
-      <li @click="appendComponent('note', $event)">note</li>
-      <li @click="appendComponent('text', $event)">text</li>
-    </context-menu>
+
+    <context-menu
+      class="contextMenu"
+      :display="showContextMenu"
+      ref="menu"
+    ></context-menu>
   </div>
 </template>
 
 <script>
-import ContextMenu from "./ContextMenu";
-import DraggableInput from "./DraggableInput.vue";
+import ChildInput from "./input/ChildInput.vue";
+import ContextMenu from "./input/ContextMenu";
+import ParentInput from "./input/ParentInput.vue";
+import NoteInput from "./input/NoteInput.vue";
+import TextInput from "./input/TextInput.vue";
+
 export default {
   name: "StepsMain",
-  components: { ContextMenu, DraggableInput },
+  components: { ContextMenu, ChildInput, ParentInput, NoteInput, TextInput },
   data() {
-    return { showContextMenu: false, elements: [], id: 0 };
+    return { showContextMenu: false };
   },
   methods: {
     console() {
@@ -36,50 +39,6 @@ export default {
     },
     openContextMenu(e) {
       this.$refs.menu.open(e);
-    },
-    appendComponent(type, $event) {
-      this.id++;
-      console.log($event.clientY, $event.clientX);
-      const data = {
-        id: this.id,
-        type: DraggableInput,
-        positionY: $event.pageY || $event.clientY,
-        positionX: $event.pageX || $event.clientX,
-        relations: [],
-      };
-      if (type == "parent") {
-        let parent = {
-          ...data,
-          placeholder: "parent",
-          background: "#FFCC91",
-        };
-        this.elements.push(parent);
-        this.$refs.menu.close();
-      } else if (type == "child") {
-        let child = {
-          ...data,
-          placeholder: "child",
-          background: "#91C4FF",
-        };
-        this.elements.push(child);
-        this.$refs.menu.close();
-      } else if (type == "note") {
-        let note = {
-          ...data,
-          placeholder: "note",
-          background: "#C4C4C4",
-        };
-        this.elements.push(note);
-        this.$refs.menu.close();
-      } else if (type == "text") {
-        let note = {
-          ...data,
-          placeholder: "text",
-          background: "transparent",
-        };
-        this.elements.push(note);
-        this.$refs.menu.close();
-      }
     },
   },
 };

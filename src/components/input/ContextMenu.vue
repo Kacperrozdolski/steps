@@ -7,25 +7,26 @@
     tabindex="0"
     @blur="close"
   >
-    <slot></slot>
+    <li>parent</li>
+    <li>child</li>
+    <li>note</li>
+    <li>text</li>
   </div>
 </template>
 <script>
-
 export default {
   name: "ContextMenu",
   props: {
-    display: Boolean, 
+    display: Boolean,
   },
   data() {
     return {
-      left: 0, 
+      left: 0,
       top: 0,
       show: false,
     };
   },
   computed: {
-
     style() {
       return {
         top: this.top + "px",
