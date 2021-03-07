@@ -6,10 +6,15 @@
       class="container"
       ref="container"
     >
-      <text-input></text-input>
-      <child-input></child-input>
-      <parent-input></parent-input>
-      <note-input></note-input> 
+      <component
+        :id="this.element.id"
+        :is="this.element.type"
+        :content="this.element.content"
+        :position="this.element.position"
+      ></component>
+      <!-- <component :is="'NoteInput'"></component>
+      <component :is="'ChildInput'"></component>
+      <component :is="'TextInput'"></component> -->
     </div>
 
     <context-menu
@@ -31,11 +36,34 @@ export default {
   name: "StepsMain",
   components: { ContextMenu, ChildInput, ParentInput, NoteInput, TextInput },
   data() {
-    return { showContextMenu: false };
+    return {
+      showContextMenu: false,
+      element: {
+        id: Number,
+        type: String,
+        connection: [
+          {
+            connection1: Object,
+            connection2: Object,
+          },
+        ],
+        position: {
+          postionX: Number,
+          postionY: Number,
+          innerCenter: {
+            // innerX: this.element.id.width / 2,
+            innerX: Number,
+            // InnerY: this.element.id.height / 2,
+            innerY: Number,
+          },
+        },
+        content: String,
+      },
+    };
   },
   methods: {
     console() {
-      console.log(this.elements);
+      console.log(this.element);
     },
     openContextMenu(e) {
       this.$refs.menu.open(e);
@@ -55,7 +83,6 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: relative;
 }
 h1 {
   color: white;
@@ -73,13 +100,15 @@ h1 {
   -ms-user-select: none;
 }
 .container {
-  width: 60%;
+  width: 1000px;
   height: 1000px;
   background: transparent;
   border: solid 4px white;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
   align-items: center;
 }
 .contextMenu li {
