@@ -1,11 +1,18 @@
 <template>
-  <draggable-div>
-    <input  spellcheck="false" type="text" placeholder="child" />
+  <draggable-div :position="position">
+    <input
+      spellcheck="false"
+      type="text"
+      placeholder="child"
+      :id="'element' + id"
+      :value="content"
+    />
   </draggable-div>
 </template>
 <script>
 import DraggableDiv from "./DraggableDiv.vue";
 export default {
+  props: ["id", "content", "position"],
   components: {
     DraggableDiv,
   },

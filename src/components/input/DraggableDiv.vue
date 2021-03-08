@@ -3,7 +3,7 @@
     ref="draggableContainer"
     id="draggable-container"
     @mousedown.shift="dragMouseDown"
-    :style="{ position: top + '%', left: left + '%' }"
+    :style="{ left: position.positionX + '%', top: position.positionY + '%' }"
   >
     <slot></slot>
   </div>
@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "DraggableDiv",
-  props: ['position.positionX'],
+  props: ["position"],
   data: function () {
     return {
       positions: {

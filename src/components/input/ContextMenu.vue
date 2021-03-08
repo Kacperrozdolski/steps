@@ -7,10 +7,10 @@
     tabindex="0"
     @blur="close"
   >
-    <li>parent</li>
-    <li>child</li>
-    <li>note</li>
-    <li>text</li>
+    <li @click="append('parent')">parent</li>
+    <li @click="append('child')">child</li>
+    <li @click="append('note')">note</li>
+    <li @click="append('text')">text</li>
   </div>
 </template>
 <script>
@@ -35,6 +35,11 @@ export default {
     },
   },
   methods: {
+    append(value) {
+      if (value == "parent") {
+        this.$emit("append");
+      }
+    },
     close() {
       this.show = false;
       this.left = 0;

@@ -1,6 +1,7 @@
 <template>
-  <draggable-div :top="top" :left="left"
+  <draggable-div :position="position"
     ><input
+      :id="'element' + id"
       spellcheck="false"
       type="text"
       placeholder="parent"
@@ -10,7 +11,7 @@
 <script>
 import DraggableDiv from "./DraggableDiv.vue";
 export default {
-  props: ["id", "content","top","left"],
+  props: ["id", "content", "position"],
   components: {
     DraggableDiv,
   },

@@ -7,10 +7,13 @@
       ref="container"
     >
       <component
-        :id="this.element.id"
-        :is="this.element.type"
-        :content="this.element.content"
-        :position="this.element.position"
+        @click="console1"
+        v-for="element in elements"
+        :key="element.id"
+        :id="element.id"
+        :is="element.type"
+        :position="element.position"
+        :content="element.content"
       ></component>
       <!-- <component :is="'NoteInput'"></component>
       <component :is="'ChildInput'"></component>
@@ -21,6 +24,7 @@
       class="contextMenu"
       :display="showContextMenu"
       ref="menu"
+      @append="asd"
     ></context-menu>
   </div>
 </template>
@@ -38,9 +42,18 @@ export default {
   data() {
     return {
       showContextMenu: false,
-      element: {
-        id: Number,
-        type: String,
+      elements: [],
+      id: 0,
+    };
+  },
+  methods: {
+    asd(value) {
+      alert(value);
+    },
+    console() {
+      this.elements.push({
+        id: this.id++,
+        type: "ParentInput",
         connection: [
           {
             connection1: Object,
@@ -48,8 +61,8 @@ export default {
           },
         ],
         position: {
-          postionX: Number,
-          postionY: Number,
+          positionX: 10,
+          positionY: 10,
           innerCenter: {
             // innerX: this.element.id.width / 2,
             innerX: Number,
@@ -57,13 +70,8 @@ export default {
             innerY: Number,
           },
         },
-        content: String,
-      },
-    };
-  },
-  methods: {
-    console() {
-      console.log(this.element);
+        content: "String",
+      });
     },
     openContextMenu(e) {
       this.$refs.menu.open(e);
