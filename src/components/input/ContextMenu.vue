@@ -37,7 +37,17 @@ export default {
   methods: {
     append(value) {
       if (value == "parent") {
-        this.$emit("append");
+        this.$emit("parent");
+        this.close();
+      } else if (value == "child") {
+        this.$emit("child");
+        this.close();
+      } else if (value == "note") {
+        this.$emit("note");
+        this.close();
+      } else {
+        this.$emit("text");
+        this.close();
       }
     },
     close() {

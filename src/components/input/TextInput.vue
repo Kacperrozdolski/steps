@@ -1,17 +1,17 @@
 <template>
-  <draggable-div>
-    <textarea
-      v-model="text"
+  <draggable-div :position="position">
+    <input
       spellcheck="false"
-      rows="1"
+      role="textbox"
+      contenteditable="true"
       placeholder="text"
-      :cols="text == '' ? 5 : text.length * 1.8"
-    ></textarea>
+    />
   </draggable-div>
 </template>
 <script>
 import DraggableDiv from "./DraggableDiv.vue";
 export default {
+  props: ["id", "content", "position"],
   components: {
     DraggableDiv,
   },
@@ -21,7 +21,7 @@ export default {
 };
 </script>
 <style scoped>
-textarea {
+input {
   background: transparent;
   color: white;
   outline: none;
@@ -29,15 +29,17 @@ textarea {
   resize: none;
   text-align: center;
   font-size: 30px;
+  min-width: 10%;
   font-weight: 500;
   padding: 5px;
+  width: 100%;
 }
-textarea:focus {
+input:focus {
   resize: none;
   text-align: center;
   outline: solid 1px rgb(161, 161, 161);
 }
-textarea::placeholder {
+input::placeholder {
   color: white;
 }
 </style>

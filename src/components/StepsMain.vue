@@ -7,7 +7,6 @@
       ref="container"
     >
       <component
-        @click="console1"
         v-for="element in elements"
         :key="element.id"
         :id="element.id"
@@ -24,7 +23,10 @@
       class="contextMenu"
       :display="showContextMenu"
       ref="menu"
-      @append="asd"
+      @parent="appendParent"
+      @child="appendChild"
+      @note="appendNote"
+      @text="appendText"
     ></context-menu>
   </div>
 </template>
@@ -50,7 +52,30 @@ export default {
     asd(value) {
       alert(value);
     },
-    console() {
+    appendChild() {
+      this.elements.push({
+        id: this.id++,
+        type: "ChildInput",
+        connection: [
+          {
+            connection1: Object,
+            connection2: Object,
+          },
+        ],
+        position: {
+          positionX: 10,
+          positionY: 10,
+          innerCenter: {
+            // innerX: this.element.id.width / 2,
+            innerX: Number,
+            // InnerY: this.element.id.height / 2,
+            innerY: Number,
+          },
+        },
+        content: "",
+      });
+    },
+    appendParent() {
       this.elements.push({
         id: this.id++,
         type: "ParentInput",
@@ -70,7 +95,53 @@ export default {
             innerY: Number,
           },
         },
-        content: "String",
+        content: "",
+      });
+    },
+    appendNote() {
+      this.elements.push({
+        id: this.id++,
+        type: "NoteInput",
+        connection: [
+          {
+            connection1: Object,
+            connection2: Object,
+          },
+        ],
+        position: {
+          positionX: 10,
+          positionY: 10,
+          innerCenter: {
+            // innerX: this.element.id.width / 2,
+            innerX: Number,
+            // InnerY: this.element.id.height / 2,
+            innerY: Number,
+          },
+        },
+        content: "",
+      });
+    },
+    appendText() {
+      this.elements.push({
+        id: this.id++,
+        type: "TextInput",
+        connection: [
+          {
+            connection1: Object,
+            connection2: Object,
+          },
+        ],
+        position: {
+          positionX: 10,
+          positionY: 10,
+          innerCenter: {
+            // innerX: this.element.id.width / 2,
+            innerX: Number,
+            // InnerY: this.element.id.height / 2,
+            innerY: Number,
+          },
+        },
+        content: "",
       });
     },
     openContextMenu(e) {
