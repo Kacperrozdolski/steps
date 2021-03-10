@@ -14,6 +14,7 @@
         :position="element.position"
         :content="element.content"
         @positionChanged="changePosition"
+        @contentChanged="changeContent"
       ></component>
     </div>
 
@@ -47,6 +48,12 @@ export default {
     };
   },
   methods: {
+    console(){
+      console.log(this.elements)
+    },
+    changeContent(id, content) {
+      this.elements[id].content = content;
+    },
     changePosition(id, positionX, positionY) {
       this.elements[id].position.positionY = positionY;
       this.elements[id].position.positionX = positionX;

@@ -4,6 +4,7 @@
       :id="id"
       spellcheck="false"
       type="text"
+      @input="contentChanged"
       placeholder="parent"
       :value="content"
   /></draggable-div>
@@ -14,6 +15,11 @@ export default {
   props: ["id", "content", "position"],
   components: {
     DraggableDiv,
+  },
+  methods: {
+    contentChanged($event) {
+      this.$emit("contentChanged", $event.path[0].id, $event.path[0].value);
+    },
   },
 };
 </script>
