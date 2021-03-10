@@ -1,7 +1,7 @@
 <template>
   <draggable-div :position="position"
     ><input
-      :id="'element' + id"
+      :id="id"
       spellcheck="false"
       type="text"
       placeholder="parent"

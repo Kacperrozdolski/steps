@@ -1,9 +1,8 @@
 <template>
   <draggable-div :position="position">
     <textarea
-      :id="'element' + id"
+      :id="id"
       spellcheck="false"
-      type="text"
       placeholder="note"
       :value="content"
     ></textarea>

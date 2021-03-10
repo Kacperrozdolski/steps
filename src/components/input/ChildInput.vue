@@ -4,7 +4,7 @@
       spellcheck="false"
       type="text"
       placeholder="child"
-      :id="'element' + id"
+      :id="id"
       :value="content"
     />
   </draggable-div>

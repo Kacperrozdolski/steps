@@ -13,10 +13,8 @@
         :is="element.type"
         :position="element.position"
         :content="element.content"
+        @positionChanged="changePosition"
       ></component>
-      <!-- <component :is="'NoteInput'"></component>
-      <component :is="'ChildInput'"></component>
-      <component :is="'TextInput'"></component> -->
     </div>
 
     <context-menu
@@ -49,8 +47,9 @@ export default {
     };
   },
   methods: {
-    asd(value) {
-      alert(value);
+    changePosition(id, positionX, positionY) {
+      this.elements[id].position.positionY = positionY;
+      this.elements[id].position.positionX = positionX;
     },
     appendChild() {
       this.elements.push({
@@ -63,8 +62,8 @@ export default {
           },
         ],
         position: {
-          positionX: 10,
-          positionY: 10,
+          positionX: 0,
+          positionY: 0,
           innerCenter: {
             // innerX: this.element.id.width / 2,
             innerX: Number,

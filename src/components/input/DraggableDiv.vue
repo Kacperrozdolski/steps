@@ -3,7 +3,7 @@
     ref="draggableContainer"
     id="draggable-container"
     @mousedown.shift="dragMouseDown"
-    :style="{ left: position.positionX + '%', top: position.positionY + '%' }"
+    :style="{ left: position.positionX + 'px', top: position.positionY + 'px' }"
   >
     <slot></slot>
   </div>
@@ -48,9 +48,15 @@ export default {
         this.positions.movementX +
         "px";
     },
-    closeDragElement() {
+    closeDragElement($event) {
       document.onmouseup = null;
       document.onmousemove = null;
+      let positionX =
+        this.$refs.draggableContainer.offsetLeft - this.positions.movementX;
+      let positionY =
+        this.$refs.draggableContainer.offsetTop - this.positions.movementY;
+      let id = $event.path[0].id;
+      this.$emit("positionChanged", id, positionX, positionY);
     },
   },
 };

@@ -7,7 +7,7 @@
     tabindex="0"
     @blur="close"
   >
-    <li @click="append('parent')">parent</li>
+    <li @click="append('parent', $event)">parent</li>
     <li @click="append('child')">child</li>
     <li @click="append('note')">note</li>
     <li @click="append('text')">text</li>

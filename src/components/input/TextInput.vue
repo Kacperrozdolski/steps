@@ -2,9 +2,10 @@
   <draggable-div :position="position">
     <input
       spellcheck="false"
-      role="textbox"
-      contenteditable="true"
+      :id="id"
       placeholder="text"
+      :value="content"
+      @click="console"
     />
   </draggable-div>
 </template>
@@ -15,9 +16,6 @@ export default {
   components: {
     DraggableDiv,
   },
-  data() {
-    return { text: "" };
-  },
 };
 </script>
 <style scoped>
@@ -26,13 +24,11 @@ input {
   color: white;
   outline: none;
   border: none;
-  resize: none;
   text-align: center;
   font-size: 30px;
-  min-width: 10%;
   font-weight: 500;
   padding: 5px;
-  width: 100%;
+  width: 8.5ch;
 }
 input:focus {
   resize: none;
