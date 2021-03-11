@@ -48,8 +48,8 @@ export default {
     };
   },
   methods: {
-    console(){
-      console.log(this.elements)
+    console() {
+      console.log(this.elements);
     },
     changeContent(id, content) {
       this.elements[id].content = content;
@@ -58,7 +58,10 @@ export default {
       this.elements[id].position.positionY = positionY;
       this.elements[id].position.positionX = positionX;
     },
-    appendChild() {
+    appendChild(e) {
+      let bounds = this.$refs.container.getBoundingClientRect();
+      let x = e.clientX - bounds.left;
+      let y = e.clientY - bounds.top;
       this.elements.push({
         id: this.id++,
         type: "ChildInput",
@@ -69,8 +72,8 @@ export default {
           },
         ],
         position: {
-          positionX: 0,
-          positionY: 0,
+          positionX: x,
+          positionY: y,
           innerCenter: {
             // innerX: this.element.id.width / 2,
             innerX: Number,
@@ -81,7 +84,10 @@ export default {
         content: "",
       });
     },
-    appendParent() {
+    appendParent(e) {
+      let bounds = this.$refs.container.getBoundingClientRect();
+      let x = e.clientX - bounds.left;
+      let y = e.clientY - bounds.top;
       this.elements.push({
         id: this.id++,
         type: "ParentInput",
@@ -92,8 +98,8 @@ export default {
           },
         ],
         position: {
-          positionX: 10,
-          positionY: 10,
+          positionX: x,
+          positionY: y,
           innerCenter: {
             // innerX: this.element.id.width / 2,
             innerX: Number,
@@ -104,7 +110,10 @@ export default {
         content: "",
       });
     },
-    appendNote() {
+    appendNote(e) {
+      let bounds = this.$refs.container.getBoundingClientRect();
+      let x = e.clientX - bounds.left;
+      let y = e.clientY - bounds.top;
       this.elements.push({
         id: this.id++,
         type: "NoteInput",
@@ -115,8 +124,8 @@ export default {
           },
         ],
         position: {
-          positionX: 10,
-          positionY: 10,
+          positionX: x,
+          positionY: y,
           innerCenter: {
             // innerX: this.element.id.width / 2,
             innerX: Number,
@@ -127,7 +136,10 @@ export default {
         content: "",
       });
     },
-    appendText() {
+    appendText(e) {
+      let bounds = this.$refs.container.getBoundingClientRect();
+      let x = e.clientX - bounds.left;
+      let y = e.clientY - bounds.top;
       this.elements.push({
         id: this.id++,
         type: "TextInput",
@@ -138,8 +150,8 @@ export default {
           },
         ],
         position: {
-          positionX: 10,
-          positionY: 10,
+          positionX: x,
+          positionY: y,
           innerCenter: {
             // innerX: this.element.id.width / 2,
             innerX: Number,

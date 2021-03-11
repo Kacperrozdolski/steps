@@ -8,9 +8,9 @@
     @blur="close"
   >
     <li @click="append('parent', $event)">parent</li>
-    <li @click="append('child')">child</li>
-    <li @click="append('note')">note</li>
-    <li @click="append('text')">text</li>
+    <li @click="append('child', $event)">child</li>
+    <li @click="append('note', $event)">note</li>
+    <li @click="append('text', $event)">text</li>
   </div>
 </template>
 <script>
@@ -35,18 +35,18 @@ export default {
     },
   },
   methods: {
-    append(value) {
+    append(value, position) {
       if (value == "parent") {
-        this.$emit("parent");
+        this.$emit("parent", position);
         this.close();
       } else if (value == "child") {
-        this.$emit("child");
+        this.$emit("child", position);
         this.close();
       } else if (value == "note") {
-        this.$emit("note");
+        this.$emit("note", position);
         this.close();
       } else {
-        this.$emit("text");
+        this.$emit("text", position);
         this.close();
       }
     },
