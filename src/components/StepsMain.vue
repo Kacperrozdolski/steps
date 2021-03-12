@@ -51,24 +51,6 @@ export default {
     };
   },
   methods: {
-    console($event) {
-      if (this.firstConnection == undefined) {
-        this.firstConnection = $event.path[0].id;
-        console.log("Pierwszy element.id " + this.firstConnection);
-      } else if (this.firstConnection != undefined) {
-        this.secondConnection = $event.path[0].id;
-        console.log("Drugi element.id " + this.secondConnection);
-        console.log(
-          "connect elements - " +
-            " id" +
-            this.firstConnection +
-            " id" +
-            this.secondConnection
-        );
-        this.firstConnection = undefined;
-        this.secondConnection = undefined;
-      }
-    },
     changeContent(id, content) {
       this.elements[id].content = content;
     },
@@ -76,7 +58,20 @@ export default {
       this.elements[id].position.positionY = positionY;
       this.elements[id].position.positionX = positionX;
     },
+    console($event) {
+      console.log(this.$refs)
+      if (this.firstConnection == undefined) {
+        this.firstConnection = $event.path[0].id;
+        console.log("Pierwszy element.id " + this.firstConnection);
+      } else if (this.firstConnection != undefined) {
+        this.secondConnection = $event.path[0].id;
+        console.log("Drugi element.id " + this.secondConnection);
+        this.firstConnection = undefined;
+        this.secondConnection = undefined;
+      }
+    },
     appendChild(e) {
+      console.log(e)
       let bounds = this.$refs.container.getBoundingClientRect();
       let x = e.clientX - bounds.left;
       let y = e.clientY - bounds.top;
