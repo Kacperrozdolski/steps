@@ -7,7 +7,7 @@
     tabindex="0"
     @blur="close"
   >
-    <li @click="append('parent', $event)">parent</li>
+    <li @click="append('orange', $event)">parent</li>
     <li @click="append('child', $event)">child</li>
     <li @click="append('note', $event)">note</li>
     <li @click="append('text', $event)">text</li>
@@ -36,17 +36,8 @@ export default {
   },
   methods: {
     append(value, position) {
-      if (value == "parent") {
-        this.$emit("parent", position);
-        this.close();
-      } else if (value == "child") {
-        this.$emit("child", position);
-        this.close();
-      } else if (value == "note") {
-        this.$emit("note", position);
-        this.close();
-      } else {
-        this.$emit("text", position);
+      if (value == "orange") {
+        this.$emit("orange", position);
         this.close();
       }
     },
