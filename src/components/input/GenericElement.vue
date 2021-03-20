@@ -2,7 +2,10 @@
   <div ref="draggableContainer" class="draggable-container" :id="id">
     <input type="text" placeholder="Orange" />
     <menu id="menu">
-      <img src="@/assets/ElementMenu/delete.svg" />
+      <img
+        src="@/assets/ElementMenu/delete.svg"
+        @click="deleteElement($event)"
+      />
       <img src="@/assets/ElementMenu/palete.svg" />
       <img
         src="@/assets/ElementMenu/connect.svg"
@@ -33,7 +36,11 @@ export default {
   methods: {
     establishConnection($event) {
       let id = $event.path[2].id;
-      this.$emit("establishConnection",id);
+      this.$emit("establishConnection", id);
+    },
+    deleteElement($event) {
+      let id = $event.path[2].id;
+      this.$emit("deleteElement", id);
     },
     dragMouseDown: function (event) {
       event.preventDefault();
@@ -57,13 +64,9 @@ export default {
         this.positions.movementX +
         "px";
       let left =
-        this.$refs.draggableContainer.offsetLeft -
-        this.positions.movementX +
-        "px";
+        this.$refs.draggableContainer.offsetLeft - this.positions.movementX;
       let top =
-        this.$refs.draggableContainer.offsetTop -
-        this.positions.movementY +
-        "px";
+        this.$refs.draggableContainer.offsetTop - this.positions.movementY;
       let id = this.$refs.draggableContainer.id;
       this.$emit("changePosition", id, top, left);
     },

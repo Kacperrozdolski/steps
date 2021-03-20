@@ -7,10 +7,10 @@
     tabindex="0"
     @blur="close"
   >
-    <li @click="append('orange', $event)">parent</li>
-    <li @click="append('child', $event)">child</li>
-    <li @click="append('note', $event)">note</li>
-    <li @click="append('text', $event)">text</li>
+    <li @click="appendElement('parent', $event)">parent</li>
+    <li @click="appendElement('child', $event)">child</li>
+    <li @click="appendElement('note', $event)">note</li>
+    <li @click="appendElement('text', $event)">text</li>
   </div>
 </template>
 <script>
@@ -35,9 +35,9 @@ export default {
     },
   },
   methods: {
-    append(value, position) {
-      if (value == "orange") {
-        this.$emit("orange", position);
+    appendElement(value, position) {
+      if (value == "parent") {
+        this.$emit("appendElement", position);
         this.close();
       }
     },

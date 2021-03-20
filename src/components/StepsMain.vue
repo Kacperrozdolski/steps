@@ -14,6 +14,7 @@
         :position="element.position"
         @changePosition="changePosition"
         @establishConnection="establishConnection"
+        @deleteElement="deleteElement"
       ></component>
       <svg>
         <component
@@ -29,7 +30,7 @@
       class="contextMenu"
       :display="showContextMenu"
       ref="menu"
-      @orange="orange"
+      @appendElement="appendElement"
     ></context-menu>
   </div>
 </template>
@@ -45,7 +46,8 @@ export default {
   data() {
     return {
       showContextMenu: false,
-      id: -1,
+      id: 0,
+      lineId: 0,
       firstConnection: null,
       secondConnection: null,
       elements: [],
@@ -55,50 +57,73 @@ export default {
   methods: {
     openContextMenu(e) {
       this.$refs.menu.open(e);
+      console.log("Otworzyłem Menu");
     },
-    changePosition(id, top, left) {
-      this.elements[id].position.left = left;
-      this.elements[id].position.top = top;
-      let i;
-      let lines = this.lines.filter(
-        (line) => line.betweenElements[0] == id || line.betweenElements[1] == id
-      );
-      for (i = 0; i < lines.length; i++) {
-        if (lines[i].betweenElements[0] == id) {
-          lines[i].position.firstEndpoint.left = left;
-          lines[i].position.firstEndpoint.top = top;
-        }
-        if (lines[i].betweenElements[1] == id) {
-          lines[i].position.secondEndpoint.left = left;
-          lines[i].position.secondEndpoint.top = top;
-        }
-      }
-    },
-    orange(e) {
-      this.id++;
+    appendElement(e) {
       let bounds = this.$refs.container.getBoundingClientRect();
       let left = e.clientX - bounds.left;
       let top = e.clientY - bounds.top;
       this.elements.push({
-        id: this.id,
+        id: this.id++,
         type: "GenericElement",
         position: {
           left: left,
           top: top,
         },
+        color: { bodyColor: "#f3334", textColor: "#f3f33" },
+        content: "",
       });
+      console.log("Stworzyłem element");
     },
-    console() {
-      console.log(this.elements);
-      console.log(this.lines);
+    changePosition(id, top, left) {
+      let element = this.elements.find((element) => element.id == id);
+      let index = this.elements.indexOf(element);
+      this.elements[index].position.left = left;
+      this.elements[index].position.top = top;
+      let i;
+      let lineArray = this.lines.filter(
+        (line) => line.betweenElements[0] == id || line.betweenElements[1] == id
+      );
+      for (i = 0; i < lineArray.length; i++) {
+        let lineIndex = this.lines.indexOf(lineArray[i]);
+        if (this.lines[lineIndex].betweenElements[0] == id) {
+          this.lines[lineIndex].position.firstEndpoint.left = left;
+          this.lines[lineIndex].position.firstEndpoint.top = top;
+        }
+        if (this.lines[lineIndex].betweenElements[1] == id) {
+          this.lines[lineIndex].position.secondEndpoint.left = left;
+          this.lines[lineIndex].position.secondEndpoint.top = top;
+        }
+      }
+      console.log("Zmieeeniaaam pozycję");
+    },
+    deleteElement(id) {
+      let element = this.elements.find((element) => element.id == id);
+      let index = this.elements.indexOf(element);
+      this.elements.splice(index, 1);
+      let i;
+      let lineArray = this.lines.filter(
+        (line) => line.betweenElements[0] == id || line.betweenElements[1] == id
+      );
+      for (i = 0; i < lineArray.length; i++) {
+        let lineIndex = this.lines.indexOf(lineArray[i]);
+        this.lines.splice(lineIndex, 1);
+      }
+      console.log("Usunąłem Element");
     },
     establishConnection(id) {
       if (this.firstConnection == null) {
-        this.firstConnection = id;
-      } else if (this.firstConnection != null && id != this.firstConnection) {
-        this.secondConnection = id;
+        let element = this.elements.find((element) => element.id == id);
+        let index = this.elements.indexOf(element);
+        this.firstConnection = index;
+        console.log("Znalazłem pierwszy element do złączenia");
+      }
+      if (this.firstConnection != null && id != this.firstConnection) {
+        let element = this.elements.find((element) => element.id == id);
+        let index = this.elements.indexOf(element);
+        this.secondConnection = index;
         this.lines.push({
-          id: 0,
+          id: this.lineId++,
           type: "GenericLine",
           betweenElements: [this.firstConnection, this.secondConnection],
           position: {
@@ -112,7 +137,22 @@ export default {
             },
           },
         });
+        this.firstConnection = null;
+        this.secondConnection = null;
+        console.log("Nawiązałem Połączenie");
       }
+    },
+    console() {
+      let lineArray = this.lines.filter(
+        (line) => line.betweenElements[0] == 0 || line.betweenElements[1] == 0
+      );
+      let lineArray1 = this.lines.filter(
+        (line) => line.betweenElements[0] == 1 || line.betweenElements[1] == 1
+      );
+      let lineArray2 = this.lines.filter(
+        (line) => line.betweenElements[0] == 2 || line.betweenElements[1] == 2
+      );
+      console.log(lineArray, lineArray1, lineArray2);
     },
   },
 };
@@ -153,8 +193,8 @@ h1 {
   -ms-user-select: none;
 }
 .container {
-  width: 1000px;
-  height: 250px;
+  width: 900px;
+  height: 700px;
   background: transparent;
   display: flex;
   justify-content: center;
