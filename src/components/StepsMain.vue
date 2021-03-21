@@ -11,7 +11,9 @@
         :key="element.id"
         :is="element.type"
         :id="element.id"
+        :color="element.color"
         :position="element.position"
+        :placeholder="element.placeholder"
         @changePosition="changePosition"
         @createConnection="createConnection"
         @deleteElement="deleteElement"
@@ -39,10 +41,11 @@
 import ContextMenu from "./input/ContextMenu";
 import GenericElement from "./input/GenericElement";
 import GenericLine from "./input/GenericLine";
+import GenericNote from "./input/GenericNote";
 
 export default {
   name: "StepsMain",
-  components: { ContextMenu, GenericElement, GenericLine },
+  components: { ContextMenu, GenericElement, GenericLine, GenericNote },
   data() {
     return {
       showContextMenu: false,
@@ -61,20 +64,47 @@ export default {
       this.$refs.menu.open(e);
       console.log("Otworzyłem Menu");
     },
-    appendElement(e) {
+    appendElement(e, b) {
       let bounds = this.$refs.container.getBoundingClientRect();
       let left = e.clientX - bounds.left;
       let top = e.clientY - bounds.top;
-      this.elements.push({
-        id: this.id++,
-        type: "GenericElement",
-        position: {
-          left: left,
-          top: top,
-        },
-        color: { bodyColor: "#f3334", textColor: "#f3f33" },
-        content: "",
-      });
+      if (b == "orange") {
+        this.elements.push({
+          id: this.id++,
+          type: "GenericElement",
+          position: {
+            left: left,
+            top: top,
+          },
+          color: { bodyColor: "#FFCF80", textColor: "#000000" },
+          content: "",
+          placeholder: "Orange",
+        });
+      } else if (b == "blue") {
+        this.elements.push({
+          id: this.id++,
+          type: "GenericElement",
+          position: {
+            left: left,
+            top: top,
+          },
+          color: { bodyColor: "#00c1ff", textColor: "#000000" },
+          content: "",
+          placeholder: "Blue",
+        });
+      } else if (b == "note") {
+        this.elements.push({
+          id: this.id++,
+          type: "GenericNote",
+          position: {
+            left: left,
+            top: top,
+          },
+          color: { bodyColor: "#c0c0c0", textColor: "#000000" },
+          content: "",
+          placeholder: "Note",
+        });
+      }
       console.log("Stworzyłem element");
     },
     changePosition(id, top, left) {
@@ -154,10 +184,15 @@ export default {
         let lineIndex = this.lines.indexOf(lineArray[i]);
         this.lines.splice(lineIndex, 1);
       }
+      if (id == this.firstConnection) {
+        this.firstConnection = null;
+        console.log("usunąłem element który był zaznaczony do połączenia");
+      }
       console.log("Usunąłem Element i wszystkie linie do niego połączone.");
     },
     console() {
       console.log(this.lines);
+      localStorage.setItem('steps')
     },
   },
 };
@@ -206,33 +241,5 @@ h1 {
   align-items: center;
   position: relative;
   border: solid 4px white;
-}
-.contextMenu li {
-  width: 120px;
-  height: 35px;
-  font-weight: 300;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1px;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none;
-}
-.contextMenu li:nth-child(1) {
-  background: #ffcc91;
-}
-.contextMenu li:nth-child(2) {
-  background: #91c4ff;
-}
-.contextMenu li:nth-child(3) {
-  background: #c4c4c4;
-}
-.contextMenu li:nth-child(4) {
-  background: #ffffff;
 }
 </style>

@@ -1,8 +1,7 @@
 <template>
   <div ref="draggableContainer" class="draggable-container" :id="id">
-    <input
+    <textarea
       spellcheck="false"
-      type="text"
       :placeholder="placeholder"
       :style="{ background: color.bodyColor, color: color.textColor }"
     />
@@ -92,23 +91,24 @@ export default {
 div:hover > menu {
   top: -35px;
 }
-input {
-  width: 140px;
-  height: 60px;
-  text-decoration: none !important;
+textarea {
+  min-width: 240px;
+  min-height: 120px;
   background: #fadcaa;
   border: 0;
   padding: 0;
+  margin: 0;
+  text-decoration: none !important;
   position: relative;
   z-index: 1;
   text-align: center;
   cursor: pointer;
 }
 
-input:focus {
+textarea:focus {
   outline: none;
 }
-input::placeholder {
+textarea::placeholder {
   color: black;
 }
 menu {
