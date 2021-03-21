@@ -9,7 +9,7 @@
       <img src="@/assets/ElementMenu/palete.svg" />
       <img
         src="@/assets/ElementMenu/connect.svg"
-        @click="establishConnection($event)"
+        @click="createConnection($event)"
       />
       <img src="@/assets/ElementMenu/position.svg" @mousedown="dragMouseDown" />
     </menu>
@@ -21,6 +21,7 @@ export default {
   props: ["id", "position"],
   data: function () {
     return {
+      selected: false,
       positions: {
         clientX: undefined,
         clientY: undefined,
@@ -34,9 +35,10 @@ export default {
     this.$refs.draggableContainer.style.top = this.position.top + "px";
   },
   methods: {
-    establishConnection($event) {
+    createConnection($event) {
+      this.selected = !this.selected;
       let id = $event.path[2].id;
-      this.$emit("establishConnection", id);
+      this.$emit("createConnection", id);
     },
     deleteElement($event) {
       let id = $event.path[2].id;
@@ -96,6 +98,7 @@ input {
   text-align: center;
   cursor: pointer;
 }
+
 input:focus {
   outline: none;
 }

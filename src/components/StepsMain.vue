@@ -13,7 +13,7 @@
         :id="element.id"
         :position="element.position"
         @changePosition="changePosition"
-        @establishConnection="establishConnection"
+        @createConnection="createConnection"
         @deleteElement="deleteElement"
       ></component>
       <svg>
@@ -50,6 +50,8 @@ export default {
       lineId: 0,
       firstConnection: null,
       secondConnection: null,
+      firstElementIndex: null,
+      secondElementIndex: null,
       elements: [],
       lines: [],
     };
@@ -97,6 +99,49 @@ export default {
       }
       console.log("Zmieeeniaaam pozycję");
     },
+    createConnection(id) {
+      if (this.firstConnection == null) {
+        let element = this.elements.find((element) => element.id == id);
+        let index = this.elements.indexOf(element);
+        this.firstElementIndex = index;
+        this.firstConnection = id;
+        console.log(this.firstConnection, this.secondConnection);
+      } else if (this.firstConnection == id) {
+        this.firstConnection = null;
+        console.log(this.firstConnection, this.secondConnection);
+      } else if (
+        (this.firstConnection != null) &
+        (this.firstConnection != id)
+      ) {
+        let element = this.elements.find((element) => element.id == id);
+        let index = this.elements.indexOf(element);
+        this.secondElementIndex = index;
+        this.secondConnection = id;
+        this.lines.push({
+          id: this.lineId++,
+          type: "GenericLine",
+          betweenElements: [this.firstConnection, this.secondConnection],
+          position: {
+            firstEndpoint: {
+              left: this.elements[this.firstElementIndex].position.left,
+              top: this.elements[this.firstElementIndex].position.top,
+            },
+            secondEndpoint: {
+              left: this.elements[this.secondElementIndex].position.left,
+              top: this.elements[this.secondElementIndex].position.top,
+            },
+          },
+        });
+        console.log(
+          "Nawiązałem Połączenie między elementem o ID " +
+            this.firstConnection +
+            " a elementem " +
+            this.secondConnection
+        );
+        this.firstConnection = null;
+        this.secondConnection = null;
+      }
+    },
     deleteElement(id) {
       let element = this.elements.find((element) => element.id == id);
       let index = this.elements.indexOf(element);
@@ -109,50 +154,10 @@ export default {
         let lineIndex = this.lines.indexOf(lineArray[i]);
         this.lines.splice(lineIndex, 1);
       }
-      console.log("Usunąłem Element");
-    },
-    establishConnection(id) {
-      if (this.firstConnection == null) {
-        let element = this.elements.find((element) => element.id == id);
-        let index = this.elements.indexOf(element);
-        this.firstConnection = index;
-        console.log("Znalazłem pierwszy element do złączenia");
-      }
-      if (this.firstConnection != null && id != this.firstConnection) {
-        let element = this.elements.find((element) => element.id == id);
-        let index = this.elements.indexOf(element);
-        this.secondConnection = index;
-        this.lines.push({
-          id: this.lineId++,
-          type: "GenericLine",
-          betweenElements: [this.firstConnection, this.secondConnection],
-          position: {
-            firstEndpoint: {
-              left: this.elements[this.firstConnection].position.left,
-              top: this.elements[this.firstConnection].position.top,
-            },
-            secondEndpoint: {
-              left: this.elements[this.secondConnection].position.left,
-              top: this.elements[this.secondConnection].position.top,
-            },
-          },
-        });
-        this.firstConnection = null;
-        this.secondConnection = null;
-        console.log("Nawiązałem Połączenie");
-      }
+      console.log("Usunąłem Element i wszystkie linie do niego połączone.");
     },
     console() {
-      let lineArray = this.lines.filter(
-        (line) => line.betweenElements[0] == 0 || line.betweenElements[1] == 0
-      );
-      let lineArray1 = this.lines.filter(
-        (line) => line.betweenElements[0] == 1 || line.betweenElements[1] == 1
-      );
-      let lineArray2 = this.lines.filter(
-        (line) => line.betweenElements[0] == 2 || line.betweenElements[1] == 2
-      );
-      console.log(lineArray, lineArray1, lineArray2);
+      console.log(this.lines);
     },
   },
 };
