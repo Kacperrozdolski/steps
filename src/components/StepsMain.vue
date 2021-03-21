@@ -192,7 +192,7 @@ export default {
     },
     console() {
       console.log(this.lines);
-      localStorage.setItem('steps')
+      
     },
   },
 };
