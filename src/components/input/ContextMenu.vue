@@ -7,8 +7,8 @@
     tabindex="0"
     @blur="close"
   >
-    <li @click="appendElement('orange', $event)">yellow</li>
-    <li @click="appendElement('blue', $event)">blue</li>
+    <li @click="appendElement('yellow', $event)">yellow</li>
+    <li @click="appendElement('green', $event)">green</li>
     <li @click="appendElement('note', $event)">note</li>
     <li @click="appendElement('text', $event)">text</li>
   </div>
@@ -36,11 +36,11 @@ export default {
   },
   methods: {
     appendElement(value, position) {
-      if (value == "orange") {
-        this.$emit("appendElement", position, "orange");
+      if (value == "yellow") {
+        this.$emit("appendElement", position, "yellow");
         this.close();
-      } else if (value == "blue") {
-        this.$emit("appendElement", position, "blue");
+      } else if (value == "green") {
+        this.$emit("appendElement", position, "green");
         this.close();
       } else if (value == "note") {
         this.$emit("appendElement", position, "note");
@@ -79,13 +79,13 @@ export default {
   user-select: none;
 }
 .contextMenu li:nth-child(1) {
-  background: #fadcaa;
+  background: #E29E00;
 }
 .contextMenu li:nth-child(2) {
-  background: #00c1ff;
+  background: #00AF91;
 }
 .contextMenu li:nth-child(3) {
-  background: #c0c0c0;
+  background: #DFDFDF;
 }
 .contextMenu li:nth-child(4) {
   background: #ffffff;

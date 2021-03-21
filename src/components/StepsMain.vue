@@ -68,7 +68,7 @@ export default {
       let bounds = this.$refs.container.getBoundingClientRect();
       let left = e.clientX - bounds.left;
       let top = e.clientY - bounds.top;
-      if (b == "orange") {
+      if (b == "yellow") {
         this.elements.push({
           id: this.id++,
           type: "GenericElement",
@@ -76,11 +76,11 @@ export default {
             left: left,
             top: top,
           },
-          color: { bodyColor: "#FFCF80", textColor: "#000000" },
+          color: { bodyColor: "#e29e00", textColor: "#000000" },
           content: "",
-          placeholder: "Orange",
+          placeholder: "Yellow",
         });
-      } else if (b == "blue") {
+      } else if (b == "green") {
         this.elements.push({
           id: this.id++,
           type: "GenericElement",
@@ -88,9 +88,9 @@ export default {
             left: left,
             top: top,
           },
-          color: { bodyColor: "#00c1ff", textColor: "#000000" },
+          color: { bodyColor: "#00AF91", textColor: "#000000" },
           content: "",
-          placeholder: "Blue",
+          placeholder: "Green",
         });
       } else if (b == "note") {
         this.elements.push({

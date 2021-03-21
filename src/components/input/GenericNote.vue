@@ -92,7 +92,7 @@ div:hover > menu {
   top: -35px;
 }
 textarea {
-  min-width: 240px;
+  min-width: 180px;
   min-height: 120px;
   background: #fadcaa;
   border: 0;
