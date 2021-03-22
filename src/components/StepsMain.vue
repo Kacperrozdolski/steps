@@ -1,6 +1,6 @@
-<template>
+<template :data="data">
   <div class="steps-landing">
-    <img src="@/assets/logo.svg" @click="console" class="logo" />
+    <img src="@/assets/logo.svg" class="logo" @click="remove" />
     <div
       @contextmenu.prevent="openContextMenu"
       class="container"
@@ -46,6 +46,7 @@ import GenericNote from "./input/GenericNote";
 export default {
   name: "StepsMain",
   components: { ContextMenu, GenericElement, GenericLine, GenericNote },
+  props: ["stepsData"],
   data() {
     return {
       showContextMenu: false,
@@ -105,6 +106,7 @@ export default {
           placeholder: "Note",
         });
       }
+      this.save();
       console.log("Stworzyłem element");
     },
     changePosition(id, top, left) {
@@ -127,6 +129,7 @@ export default {
           this.lines[lineIndex].position.secondEndpoint.top = top;
         }
       }
+      this.save();
       console.log("Zmieeeniaaam pozycję");
     },
     createConnection(id) {
@@ -168,6 +171,7 @@ export default {
             " a elementem " +
             this.secondConnection
         );
+        this.save();
         this.firstConnection = null;
         this.secondConnection = null;
       }
@@ -188,12 +192,36 @@ export default {
         this.firstConnection = null;
         console.log("usunąłem element który był zaznaczony do połączenia");
       }
+      this.save();
       console.log("Usunąłem Element i wszystkie linie do niego połączone.");
     },
-    console() {
-      console.log(this.lines);
-      
+    save() {
+      let stepsData = [this.elements, this.lines];
+      localStorage.setItem("stepsData", JSON.stringify(stepsData));
+      console.log("zapisałem wszystko");
     },
+    remove() {
+      console.log("Usuwam");
+    },
+  },
+  //
+  mounted() {
+    let data = this.stepsData;
+    data = JSON.parse(data);
+    if (data == null) {
+      console.log("Brak danych");
+    } else if (data[0] == 0) {
+      console.log("Brak danych");
+    } else {
+      if (data[0].length != 0) {
+        this.elements = data[0];
+        this.id = this.elements[this.elements.length - 1].id + 1;
+      }
+      if (data[1].length != 0) {
+        this.lines = data[1];
+        this.lineId = this.lines[this.lines.length - 1].id + 1;
+      }
+    }
   },
 };
 </script>
@@ -210,10 +238,11 @@ body {
   margin: 0 !important;
 }
 .steps-landing {
-  min-height: 1300px;
+  min-height: 150vh;
   width: 100%;
   background: black;
   display: flex;
+  position: relative;
   align-items: center;
   flex-direction: column;
 }
@@ -234,12 +263,18 @@ h1 {
 }
 .container {
   width: 900px;
-  height: 700px;
+  height: 900px;
   background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   border: solid 4px white;
+}
+p {
+  position: fixed;
+  color: rgb(73, 73, 73);
+  bottom: 0px;
+  left: 1350px;
 }
 </style>

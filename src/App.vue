@@ -1,5 +1,5 @@
 <template>
-  <steps-main></steps-main>
+  <steps-main :stepsData="stepsData"></steps-main>
 </template>
 
 <script>
@@ -9,6 +9,11 @@ export default {
   name: "App",
   components: {
     StepsMain,
+  },
+  computed: {
+    stepsData() {
+      return localStorage.getItem("stepsData");
+    },
   },
 };
 </script>
