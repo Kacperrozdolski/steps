@@ -96,7 +96,6 @@ input {
   width: 140px;
   height: 60px;
   text-decoration: none !important;
-  background: #fadcaa;
   border: 0;
   padding: 0;
   position: relative;

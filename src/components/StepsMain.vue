@@ -1,33 +1,34 @@
 <template :data="data">
-  <div class="steps-landing">
-    <img src="@/assets/logo.svg" class="logo" @click="remove" />
-    <div
-      @contextmenu.prevent="openContextMenu"
-      class="container"
-      ref="container"
-    >
-      <component
-        v-for="element in elements"
-        :key="element.id"
-        :is="element.type"
-        :id="element.id"
-        :color="element.color"
-        :position="element.position"
-        :placeholder="element.placeholder"
-        @changePosition="changePosition"
-        @createConnection="createConnection"
-        @deleteElement="deleteElement"
-      ></component>
-      <svg>
+  <div class="steps-landing" ref="asd">
+    <img src="@/assets/logo.svg" class="logo" @click="createImage" />
+    <div ref="capture">
+      <div
+        @contextmenu.prevent="openContextMenu"
+        class="container"
+        ref="container"
+      >
         <component
-          v-for="line in lines"
-          :is="line.type"
-          :key="line.id"
-          :position="line.position"
+          v-for="element in elements"
+          :key="element.id"
+          :is="element.type"
+          :id="element.id"
+          :color="element.color"
+          :position="element.position"
+          :placeholder="element.placeholder"
+          @changePosition="changePosition"
+          @createConnection="createConnection"
+          @deleteElement="deleteElement"
         ></component>
-      </svg>
+        <svg>
+          <component
+            v-for="line in lines"
+            :is="line.type"
+            :key="line.id"
+            :position="line.position"
+          ></component>
+        </svg>
+      </div>
     </div>
-
     <context-menu
       class="contextMenu"
       :display="showContextMenu"
@@ -58,6 +59,8 @@ export default {
       secondConnection: null,
       firstElementIndex: null,
       secondElementIndex: null,
+      captureStyle:
+        "svg{stroke:#fff;stroke-width:4;width:100%;background:transparent;height:100%}body{margin:0!important}.steps-landing{min-height:150vh;width:100%;background:black;display:flex;position:relative;align-items:center;flex-direction:column}h1{color:white}.logo{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.container{width:900px;height:900px;background:black;display:flex;justify-content:center;align-items:center;position:relative;border:solid 4px white}.draggable-container{position:absolute}div:hover>menu{top:-35px}textarea{min-width:180px;min-height:120px;background:#fadcaa;border:0;padding:0;margin:0;text-decoration:none!important;position:relative;z-index:1;text-align:center;cursor:pointer}textarea:focus{outline:0}textarea::placeholder{color:black}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}line{position:absolute;background:transparent}.draggable-container{position:absolute}div:hover>menu{top:-35px}input{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}input::placeholder{color:black}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}",
     };
   },
   methods: {
@@ -208,6 +211,35 @@ export default {
       this.lines = [];
       this.lineId = 0;
     },
+    async createImage() {
+      const payload = {
+        html: this.$refs.capture.innerHTML,
+        css: this.captureStyle,
+      };
+      let headers = {
+        auth: {
+          username: "4d4e522f-2b66-42e4-8a99-574d791c125c",
+          password: "94ad8df8-bb91-419b-84f8-8d9a42c7bc32",
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      try {
+        const response = await this.axios.post(
+          "https://hcti.io/v1/image",
+          JSON.stringify(payload),
+          headers
+        );
+        window.open(response.data.url);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    getContainer() {
+      // console.log(this.$refs.container.innerHTML)
+      console.log(this.$refs.capture.innerHTML);
+    },
   },
   //
   mounted() {
@@ -269,17 +301,11 @@ h1 {
 .container {
   width: 900px;
   height: 900px;
-  background: transparent;
+  background: black;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   border: solid 4px white;
-}
-p {
-  position: fixed;
-  color: rgb(73, 73, 73);
-  bottom: 0px;
-  left: 1350px;
 }
 </style>
