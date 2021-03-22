@@ -50,14 +50,14 @@ export default {
   data() {
     return {
       showContextMenu: false,
+      elements: [],
       id: 0,
+      lines: [],
       lineId: 0,
       firstConnection: null,
       secondConnection: null,
       firstElementIndex: null,
       secondElementIndex: null,
-      elements: [],
-      lines: [],
     };
   },
   methods: {
@@ -202,6 +202,11 @@ export default {
     },
     remove() {
       console.log("Usuwam");
+      localStorage.removeItem("stepsData");
+      this.elements = [];
+      this.id = 0;
+      this.lines = [];
+      this.lineId = 0;
     },
   },
   //
