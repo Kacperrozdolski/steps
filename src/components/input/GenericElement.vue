@@ -1,22 +1,50 @@
 <template>
-  <div ref="draggableContainer" class="draggable-container" :id="id">
+  <div
+    ref="draggableContainer"
+    @mouseleave="paleteLeave"
+    class="draggable-container"
+    :id="id"
+  >
     <input
+      class="genericElement"
       spellcheck="false"
       type="text"
       :placeholder="placeholder"
       :style="{ background: color.bodyColor, color: color.textColor }"
     />
     <menu id="menu">
+      <div v-if="palete" class="palete">
+        <div class="colorInput">
+          <div :style="{ background: color.bodyColor }" class="textColor"></div>
+          <input
+            type="text"
+            :placeholder="color.bodyColor"
+            v-on:keyup.enter="changeBodycolor"
+          />
+        </div>
+        <div class="colorInput">
+          <div :style="{ background: color.textColor }" class="textColor"></div>
+          <input
+            type="text"
+            :placeholder="color.textColor"
+            v-on:keyup.enter="changeTextcolor"
+          />
+        </div>
+      </div>
       <img
         src="@/assets/ElementMenu/delete.svg"
         @click="deleteElement($event)"
       />
-      <img src="@/assets/ElementMenu/palete.svg" />
+      <img src="@/assets/ElementMenu/palete.svg" @click="togglePalete()" />
       <img
         src="@/assets/ElementMenu/connect.svg"
         @click="createConnection($event)"
       />
-      <img src="@/assets/ElementMenu/position.svg" @mousedown="dragMouseDown" />
+      <img
+        src="@/assets/ElementMenu/position.svg"
+        @mousedown="dragMouseDown"
+        @mouseover="paleteLeave"
+      />
     </menu>
   </div>
 </template>
@@ -24,14 +52,16 @@
 <script>
 export default {
   props: ["id", "position", "color", "placeholder"],
-  data: function () {
+  data() {
     return {
       selected: false,
+      palete: false,
       positions: {
         clientX: undefined,
         clientY: undefined,
         movementX: 0,
         movementY: 0,
+        isActive: false,
       },
     };
   },
@@ -81,6 +111,37 @@ export default {
       document.onmouseup = null;
       document.onmousemove = null;
     },
+    togglePalete() {
+      console.log("asd");
+      this.palete = !this.palete;
+    },
+    paleteLeave() {
+      this.palete = false;
+    },
+    changeBodycolor(value) {
+      let id;
+      let color;
+      id = value.path[4].id;
+      color = value.path[0].value.toUpperCase();
+      if (/^#([0-9A-F]{3}){1,2}$/.test(color)) {
+        console.log("A TO JEST HEX WALUE I GITEZ");
+        this.$emit("changeBodycolor", id, color);
+      } else {
+        console.log("TO NIE JE HEX WALUE");
+      }
+    },
+    changeTextcolor(value) {
+      let id;
+      let color;
+      id = value.path[4].id;
+      color = value.path[0].value.toUpperCase();
+      if (/^#([0-9A-F]{3}){1,2}$/.test(color)) {
+        console.log("A TO JEST HEX WALUE I GITEZ");
+        this.$emit("changeTextcolor", id, color);
+      } else {
+        console.log("TO NIE JE HEX WALUE");
+      }
+    },
   },
 };
 </script>
@@ -92,7 +153,7 @@ export default {
 div:hover > menu {
   top: -35px;
 }
-input {
+.genericElement {
   width: 140px;
   height: 60px;
   text-decoration: none !important;
@@ -107,7 +168,7 @@ input {
 input:focus {
   outline: none;
 }
-input::placeholder {
+.genericElement::placeholder {
   color: black;
 }
 menu {
@@ -131,5 +192,32 @@ img {
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+.palete {
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  bottom: 100%;
+  margin: 0;
+  background: #ffffff;
+}
+.colorInput {
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.colorInput input {
+  width: 60%;
+  height: 23px;
+  margin: 0;
+  background: #dfdfdf;
+  border: none;
+}
+.textColor {
+  height: 25px;
+  width: 25px;
 }
 </style>

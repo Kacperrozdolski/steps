@@ -18,6 +18,8 @@
           @changePosition="changePosition"
           @createConnection="createConnection"
           @deleteElement="deleteElement"
+          @changeBodycolor="changeBodycolor"
+          @changeTextcolor="changeTextcolor"
         ></component>
         <svg>
           <component
@@ -236,12 +238,19 @@ export default {
         console.error(error);
       }
     },
-    getContainer() {
-      // console.log(this.$refs.container.innerHTML)
-      console.log(this.$refs.capture.innerHTML);
+    changeBodycolor(id, color) {
+      let element = this.elements.find((element) => element.id == id);
+      let index = this.elements.indexOf(element);
+      this.elements[index].color.bodyColor = color;
+      console.log(id, color);
+    },
+    changeTextcolor(id, color) {
+      let element = this.elements.find((element) => element.id == id);
+      let index = this.elements.indexOf(element);
+      this.elements[index].color.textColor = color;
+      console.log(id, color);
     },
   },
-  //
   mounted() {
     let data = this.stepsData;
     data = JSON.parse(data);
