@@ -10,9 +10,12 @@
       spellcheck="false"
       type="text"
       @input="changeContenet"
-      :placeholder="placeholder"
+      :placeholder="content == '' ? 'yellow' : content"
       :value="content"
-      :style="{ background: color.bodyColor, color: color.textColor }"
+      :style="{
+        background: color.bodyColor,
+        color: color.textColor,
+      }"
     />
     <menu id="menu">
       <div v-if="palete" class="palete">
@@ -53,7 +56,7 @@
 
 <script>
 export default {
-  props: ["id", "position", "color", "placeholder","content"],
+  props: ["id", "position", "color", "placeholder", "content"],
   data() {
     return {
       selected: false,
@@ -176,7 +179,7 @@ input:focus {
   outline: none;
 }
 .genericElement::placeholder {
-  color: black;
+  color: v-bind("placeholderColor");
 }
 menu {
   width: 100%;

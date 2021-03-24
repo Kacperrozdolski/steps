@@ -65,8 +65,6 @@ export default {
       secondConnection: null,
       firstElementIndex: null,
       secondElementIndex: null,
-      captureStyle:
-        "svg{stroke:#fff;stroke-width:4;width:100%;background:transparent;height:100%}body{margin:0!important}.steps-landing{min-height:150vh;width:100%;background:black;display:flex;position:relative;align-items:center;flex-direction:column}h1{color:white}.logo{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.container{width:900px;height:900px;background:black;display:flex;justify-content:center;align-items:center;position:relative;border:solid 4px white}.draggable-container{position:absolute}div:hover>menu{top:-35px}textarea{min-width:180px;min-height:120px;background:#fadcaa;border:0;padding:0;margin:0;text-decoration:none!important;position:relative;z-index:1;text-align:center;cursor:pointer}textarea:focus{outline:0}textarea::placeholder{color:black}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}line{position:absolute;background:transparent}.draggable-container{position:absolute}div:hover>menu{top:-35px}input{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}input::placeholder{color:black}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}",
     };
   },
   methods: {
@@ -138,8 +136,6 @@ export default {
           this.lines[lineIndex].position.secondEndpoint.top = top;
         }
       }
-      this.save();
-      console.log("Zmieeeniaaam pozycję");
     },
     changeContent(id, content) {
       let element = this.elements.find((element) => element.id == id);
@@ -226,7 +222,7 @@ export default {
     async createImage() {
       const payload = {
         html: this.$refs.capture.innerHTML,
-        css: this.captureStyle,
+        css: "asd",
       };
       let headers = {
         auth: {
@@ -243,22 +239,38 @@ export default {
           JSON.stringify(payload),
           headers
         );
-        window.open(response.data.url);
+        this.downloadImage(response.data.url);
       } catch (error) {
         console.error(error);
       }
+    },
+    downloadImage(url) {
+      this.axios({
+        url: url,
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
+        fileLink.setAttribute("download", "steps-image.jpg");
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      });
     },
     changeBodycolor(id, color) {
       let element = this.elements.find((element) => element.id == id);
       let index = this.elements.indexOf(element);
       this.elements[index].color.bodyColor = color;
       console.log(id, color);
+      this.save();
     },
     changeTextcolor(id, color) {
       let element = this.elements.find((element) => element.id == id);
       let index = this.elements.indexOf(element);
       this.elements[index].color.textColor = color;
       console.log(id, color);
+      this.save();
     },
     removeLine(id) {
       let line = this.lines.find((line) => line.id == id);
