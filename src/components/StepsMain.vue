@@ -28,7 +28,9 @@
             v-for="line in lines"
             :is="line.type"
             :key="line.id"
+            :id="line.id"
             :position="line.position"
+            @removeLine="removeLine"
           ></component>
         </svg>
       </div>
@@ -257,6 +259,12 @@ export default {
       let index = this.elements.indexOf(element);
       this.elements[index].color.textColor = color;
       console.log(id, color);
+    },
+    removeLine(id) {
+      let line = this.lines.find((line) => line.id == id);
+      let index = this.lines.indexOf(line);
+      this.lines.splice(index, 1);
+      this.save();
     },
   },
   mounted() {

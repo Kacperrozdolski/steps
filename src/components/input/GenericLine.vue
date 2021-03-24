@@ -1,6 +1,7 @@
 <template>
   <line
-    @click="console"
+    @click="removeLine"
+    :id="id"
     :x1="position.firstEndpoint.left + 72"
     :y1="position.firstEndpoint.top + 30"
     :x2="position.secondEndpoint.left + 72"
@@ -10,10 +11,11 @@
 
 <script>
 export default {
-  props: ["position"],
+  props: ["position", "id"],
   methods: {
-    removeLine() {
-      console.log("assets/logo.svg");
+    removeLine($event) {
+      let id = $event.path[0].id;
+      this.$emit("removeLine", id);
     },
   },
 };
