@@ -1,31 +1,63 @@
 <template>
-  <div ref="draggableContainer" class="draggable-container" :id="id">
+  <div
+    ref="draggableContainer"
+    @mouseleave="paleteLeave"
+    class="draggable-container"
+    :id="id"
+  >
     <textarea
+      class="genericNote"
       spellcheck="false"
-      :placeholder="placeholder"
+      @input="changeContenet"
+      :placeholder="content == '' ? 'yellow' : content"
+      :value="content"
       :style="{ background: color.bodyColor, color: color.textColor }"
+      style="--color:{{color.bodyColor}}"
     />
     <menu id="menu">
+      <div v-if="palete" class="palete">
+        <div class="colorInput">
+          <div :style="{ background: color.bodyColor }" class="textColor"></div>
+          <input
+            type="text"
+            :placeholder="color.bodyColor"
+            v-on:keyup.enter="changeBodycolor"
+          />
+        </div>
+        <div class="colorInput">
+          <div :style="{ background: color.textColor }" class="textColor"></div>
+          <input
+            type="text"
+            :placeholder="color.textColor"
+            v-on:keyup.enter="changeTextcolor"
+          />
+        </div>
+      </div>
       <img
         src="@/assets/ElementMenu/delete.svg"
         @click="deleteElement($event)"
       />
-      <img src="@/assets/ElementMenu/palete.svg" />
+      <img src="@/assets/ElementMenu/palete.svg" @click="togglePalete()" />
       <img
         src="@/assets/ElementMenu/connect.svg"
         @click="createConnection($event)"
       />
-      <img src="@/assets/ElementMenu/position.svg" @mousedown="dragMouseDown" />
+      <img
+        src="@/assets/ElementMenu/position.svg"
+        @mousedown="dragMouseDown"
+        @mouseover="paleteLeave"
+      />
     </menu>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["id", "position", "color", "placeholder"],
-  data: function () {
+  props: ["id", "position", "color", "placeholder", "content"],
+  data() {
     return {
       selected: false,
+      palete: false,
       positions: {
         clientX: undefined,
         clientY: undefined,
@@ -80,6 +112,41 @@ export default {
       document.onmouseup = null;
       document.onmousemove = null;
     },
+    togglePalete() {
+      this.palete = !this.palete;
+    },
+    paleteLeave() {
+      this.palete = false;
+    },
+    changeBodycolor(value) {
+      let id;
+      let color;
+      id = value.path[4].id;
+      color = value.path[0].value.toUpperCase();
+      if (/^#([0-9A-F]{3}){1,2}$/.test(color)) {
+        console.log("A TO JEST HEX WALUE I GITEZ");
+        this.$emit("changeBodycolor", id, color);
+      } else {
+        console.log("TO NIE JE HEX WALUE");
+      }
+    },
+    changeTextcolor(value) {
+      let id;
+      let color;
+      id = value.path[4].id;
+      color = value.path[0].value.toUpperCase();
+      if (/^#([0-9A-F]{3}){1,2}$/.test(color)) {
+        console.log("A TO JEST HEX WALUE I GITEZ");
+        this.$emit("changeTextcolor", id, color);
+      } else {
+        console.log("TO NIE JE HEX WALUE");
+      }
+    },
+    changeContenet($event) {
+      let id = $event.path[1].id;
+      let content = $event.path[0].value;
+      this.$emit("changeContent", id, content);
+    },
   },
 };
 </script>
@@ -91,13 +158,11 @@ export default {
 div:hover > menu {
   top: -35px;
 }
-textarea {
+.genericNote {
   min-width: 180px;
-  min-height: 120px;
-  background: #fadcaa;
+  min-height: 90px;
   border: 0;
   padding: 0;
-  margin: 0;
   text-decoration: none !important;
   position: relative;
   z-index: 1;
@@ -105,11 +170,11 @@ textarea {
   cursor: pointer;
 }
 
-textarea:focus {
+.genericNote:focus {
   outline: none;
 }
-textarea::placeholder {
-  color: black;
+.genericNote::placeholder {
+  color: var(--color);
 }
 menu {
   width: 100%;
@@ -132,5 +197,32 @@ img {
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+.palete {
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  bottom: 100%;
+  margin: 0;
+  background: #ffffff;
+}
+.colorInput {
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.colorInput input {
+  width: 60%;
+  height: 23px;
+  margin: 0;
+  background: #dfdfdf;
+  border: none;
+}
+.textColor {
+  height: 25px;
+  width: 25px;
 }
 </style>
