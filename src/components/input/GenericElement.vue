@@ -16,6 +16,7 @@
         background: color.bodyColor,
         color: color.textColor,
       }"
+      style="--color:{{color.bodyColor}}"
     />
     <menu id="menu">
       <div v-if="palete" class="palete">
@@ -179,7 +180,7 @@ input:focus {
   outline: none;
 }
 .genericElement::placeholder {
-  color: v-bind("placeholderColor");
+  color: var(--color);
 }
 menu {
   width: 100%;
