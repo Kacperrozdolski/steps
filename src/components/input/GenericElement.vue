@@ -9,7 +9,9 @@
       class="genericElement"
       spellcheck="false"
       type="text"
+      @input="changeContenet"
       :placeholder="placeholder"
+      :value="content"
       :style="{ background: color.bodyColor, color: color.textColor }"
     />
     <menu id="menu">
@@ -51,7 +53,7 @@
 
 <script>
 export default {
-  props: ["id", "position", "color", "placeholder"],
+  props: ["id", "position", "color", "placeholder","content"],
   data() {
     return {
       selected: false,
@@ -70,6 +72,11 @@ export default {
     this.$refs.draggableContainer.style.top = this.position.top + "px";
   },
   methods: {
+    changeContenet($event) {
+      let id = $event.path[1].id;
+      let content = $event.path[0].value;
+      this.$emit("changeContent", id, content);
+    },
     createConnection($event) {
       this.selected = !this.selected;
       let id = $event.path[2].id;

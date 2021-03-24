@@ -12,6 +12,7 @@
           :key="element.id"
           :is="element.type"
           :id="element.id"
+          :content="element.content"
           :color="element.color"
           :position="element.position"
           :placeholder="element.placeholder"
@@ -20,6 +21,7 @@
           @deleteElement="deleteElement"
           @changeBodycolor="changeBodycolor"
           @changeTextcolor="changeTextcolor"
+          @changeContent="changeContent"
         ></component>
         <svg>
           <component
@@ -136,6 +138,12 @@ export default {
       }
       this.save();
       console.log("Zmieeeniaaam pozycję");
+    },
+    changeContent(id, content) {
+      let element = this.elements.find((element) => element.id == id);
+      let index = this.elements.indexOf(element);
+      this.elements[index].content = content;
+      this.save();
     },
     createConnection(id) {
       if (this.firstConnection == null) {
