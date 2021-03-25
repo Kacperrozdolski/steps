@@ -1,32 +1,33 @@
 <template>
   <div
     ref="draggableContainer"
-    @mouseover="toggleHover"
     @mouseleave="untoggleHover"
+    @mouseover="toggleHover"
     class="draggable-container"
     :id="id"
   >
-    <textarea
-      class="genericNote"
+    <input
+      class="genericText"
       spellcheck="false"
+      type="text"
       @input="changeContenet"
-      :placeholder="content == '' ? 'note' : content"
+      :placeholder="content == '' ? placeholder : content"
       :value="content"
       :style="{
         background: color.bodyColor,
         color: color.textColor,
-        resize: hover ? 'both' : 'none',
+        border: hover ? '1px solid white' : 'none',
       }"
       style="--color:{{color.bodyColor}}"
     />
-    <menu id="menu" @mouseover="toggleHover">
+    <menu v-if="hover" id="menuText" @mouseover="toggleHover">
       <div v-if="palete" class="palete">
         <div class="colorInput">
           <div :style="{ background: color.bodyColor }" class="textColor"></div>
           <input
             type="text"
             :placeholder="color.bodyColor"
-            @keyup.enter="changeBodycolor"
+            v-on:keyup.enter="changeBodycolor"
           />
         </div>
         <div class="colorInput">
@@ -34,7 +35,7 @@
           <input
             type="text"
             :placeholder="color.textColor"
-            @keyup.enter="changeTextcolor"
+            v-on:keyup.enter="changeTextcolor"
           />
         </div>
       </div>
@@ -44,13 +45,9 @@
       />
       <img src="@/assets/ElementMenu/palete.svg" @click="togglePalete()" />
       <img
-        src="@/assets/ElementMenu/connect.svg"
-        @click="createConnection($event)"
-      />
-      <img
         src="@/assets/ElementMenu/position.svg"
         @mousedown="dragMouseDown"
-        @mouseover="untoggleHover"
+        @mouseover="paleteLeave"
       />
     </menu>
   </div>
@@ -69,6 +66,7 @@ export default {
         clientY: undefined,
         movementX: 0,
         movementY: 0,
+        isActive: false,
       },
     };
   },
@@ -79,10 +77,14 @@ export default {
   methods: {
     untoggleHover() {
       this.hover = false;
-      this.palete = false
     },
     toggleHover() {
       this.hover = true;
+    },
+    changeContenet($event) {
+      let id = $event.path[1].id;
+      let content = $event.path[0].value;
+      this.$emit("changeContent", id, content);
     },
     createConnection($event) {
       this.selected = !this.selected;
@@ -120,13 +122,18 @@ export default {
         this.$refs.draggableContainer.offsetTop - this.positions.movementY;
       let id = this.$refs.draggableContainer.id;
       this.$emit("changePosition", id, top, left);
+      this.toggleHover()
     },
     closeDragElement() {
       document.onmouseup = null;
       document.onmousemove = null;
     },
     togglePalete() {
+      console.log("asd");
       this.palete = !this.palete;
+    },
+    paleteLeave() {
+      this.palete = false;
     },
     changeBodycolor(value) {
       let id;
@@ -152,11 +159,6 @@ export default {
         console.log("TO NIE JE HEX WALUE");
       }
     },
-    changeContenet($event) {
-      let id = $event.path[1].id;
-      let content = $event.path[0].value;
-      this.$emit("changeContent", id, content);
-    },
   },
 };
 </script>
@@ -165,25 +167,25 @@ export default {
 .draggable-container {
   position: absolute;
 }
-div:hover > menu {
-  top: -35px;
+#menuText {
+  top: -30px;
 }
-.genericNote {
-  min-width: 180px;
-  min-height: 90px;
+.genericText {
+  width: 140px;
+  height: 60px;
+  text-decoration: none !important;
   border: 0;
   padding: 0;
-  text-decoration: none !important;
   position: relative;
   z-index: 1;
   text-align: center;
   cursor: pointer;
 }
 
-.genericNote:focus {
+input:focus {
   outline: none;
 }
-.genericNote::placeholder {
+.genericText::placeholder {
   color: var(--color);
 }
 menu {

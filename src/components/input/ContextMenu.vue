@@ -45,6 +45,9 @@ export default {
       } else if (value == "note") {
         this.$emit("appendElement", position, "note");
         this.close();
+      } else if (value == "text") {
+        this.$emit("appendElement", position, "text");
+        this.close();
       }
     },
     close() {
@@ -79,13 +82,13 @@ export default {
   user-select: none;
 }
 .contextMenu li:nth-child(1) {
-  background: #E29E00;
+  background: #e29e00;
 }
 .contextMenu li:nth-child(2) {
-  background: #00AF91;
+  background: #00af91;
 }
 .contextMenu li:nth-child(3) {
-  background: #DFDFDF;
+  background: #dfdfdf;
 }
 .contextMenu li:nth-child(4) {
   background: #ffffff;
