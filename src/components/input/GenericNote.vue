@@ -9,9 +9,13 @@
       class="genericNote"
       spellcheck="false"
       @input="changeContenet"
-      :placeholder="content == '' ? 'yellow' : content"
+      :placeholder="content == '' ? 'note' : content"
       :value="content"
-      :style="{ background: color.bodyColor, color: color.textColor }"
+      :style="{
+        background: color.bodyColor,
+        color: color.textColor,
+        resize: hover ? 'both' : 'none',
+      }"
       style="--color:{{color.bodyColor}}"
     />
     <menu id="menu">
@@ -21,7 +25,7 @@
           <input
             type="text"
             :placeholder="color.bodyColor"
-            v-on:keyup.enter="changeBodycolor"
+            @keyup.enter="changeBodycolor"
           />
         </div>
         <div class="colorInput">
@@ -29,7 +33,7 @@
           <input
             type="text"
             :placeholder="color.textColor"
-            v-on:keyup.enter="changeTextcolor"
+            @keyup.enter="changeTextcolor"
           />
         </div>
       </div>
@@ -56,6 +60,7 @@ export default {
   props: ["id", "position", "color", "placeholder", "content"],
   data() {
     return {
+      hover: false,
       selected: false,
       palete: false,
       positions: {

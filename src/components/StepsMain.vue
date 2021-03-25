@@ -1,40 +1,45 @@
 <template :data="data">
   <div class="steps-landing" ref="asd">
     <img src="@/assets/logo.svg" class="logo" @click="createImage" />
-    <div ref="capture">
-      <div
-        @contextmenu.prevent="openContextMenu"
-        class="container"
-        ref="container"
-      >
-        <component
-          v-for="element in elements"
-          :key="element.id"
-          :is="element.type"
-          :id="element.id"
-          :content="element.content"
-          :color="element.color"
-          :position="element.position"
-          :placeholder="element.placeholder"
-          @changePosition="changePosition"
-          @createConnection="createConnection"
-          @deleteElement="deleteElement"
-          @changeBodycolor="changeBodycolor"
-          @changeTextcolor="changeTextcolor"
-          @changeContent="changeContent"
-        ></component>
-        <svg>
+      <div ref="capture">
+        <div
+          @contextmenu.prevent="openContextMenu"
+          class="container"
+          ref="container"
+          @mouseover="changeCursor"
+          :style="{
+            cursor: changeWidth ? 'w-resize' : '',
+            width: containerWidth + 'px',
+          }"
+        >
           <component
-            v-for="line in lines"
-            :is="line.type"
-            :key="line.id"
-            :id="line.id"
-            :position="line.position"
-            @removeLine="removeLine"
+            v-for="element in elements"
+            :key="element.id"
+            :is="element.type"
+            :id="element.id"
+            :content="element.content"
+            :color="element.color"
+            :position="element.position"
+            :placeholder="element.placeholder"
+            @changePosition="changePosition"
+            @createConnection="createConnection"
+            @deleteElement="deleteElement"
+            @changeBodycolor="changeBodycolor"
+            @changeTextcolor="changeTextcolor"
+            @changeContent="changeContent"
           ></component>
-        </svg>
+          <svg>
+            <component
+              v-for="line in lines"
+              :is="line.type"
+              :key="line.id"
+              :id="line.id"
+              :position="line.position"
+              @removeLine="removeLine"
+            ></component>
+          </svg>
+        </div>
       </div>
-    </div>
     <context-menu
       class="contextMenu"
       :display="showContextMenu"
@@ -65,11 +70,33 @@ export default {
       secondConnection: null,
       firstElementIndex: null,
       secondElementIndex: null,
+      changeWidth: false,
+      containerWidth: 1000,
       css:
         "svg{stroke:#fff;stroke-width:4;width:100%;background:transparent;height:100%}body{margin:0!important}.steps-landing{min-height:150vh;width:100%;background:black;display:flex;position:relative;align-items:center;flex-direction:column}h1{color:white}.logo{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.container{width:900px;height:900px;background:black;display:flex;justify-content:center;align-items:center;position:relative;border:solid 4px white}.draggable-container{position:absolute}div:hover>menu{top:-35px}.genericNote{min-width:180px;min-height:90px;border:0;padding:0;text-decoration:none!important;position:relative;z-index:1;text-align:center;cursor:pointer}.genericNote:focus{outline:0}.genericNote::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}.draggable-container{position:absolute}div:hover>menu{top:-35px}.genericElement{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}.genericElement::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}line{cursor:pointer;position:absolute;background:transparent}",
     };
   },
   methods: {
+    changeCursor(e) {
+      let container = this.$refs.container.getBoundingClientRect();
+      let width = container.width;
+      if (e.offsetX < 0 || e.offsetX > width - 8) {
+        this.changeWidth = true;
+      } else {
+        this.changeWidth = false;
+      }
+    },
+    console(e) {
+      console.log(e);
+      // let container = this.$refs.container.getBoundingClientRect();
+      // let width = container.width;
+      // if (e.offsetX < 0 || e.offsetX > width - 8) {
+      //   this.changeWidth = true;
+      //   this.containerWidth = this.containerWidth + 20;
+      // } else {
+      //   this.changeWidth = false;
+      // }
+    },
     openContextMenu(e) {
       this.$refs.menu.open(e);
       console.log("Otworzyłem Menu");
@@ -338,8 +365,8 @@ h1 {
   -ms-user-select: none;
 }
 .container {
-  width: 900px;
   height: 900px;
+  max-width: 95vw;
   background: black;
   display: flex;
   justify-content: center;

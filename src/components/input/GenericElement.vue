@@ -10,7 +10,7 @@
       spellcheck="false"
       type="text"
       @input="changeContenet"
-      :placeholder="content == '' ? 'yellow' : content"
+      :placeholder="content == '' ? placeholder : content"
       :value="content"
       :style="{
         background: color.bodyColor,
@@ -158,6 +158,9 @@ export default {
 </script>
 
 <style scoped>
+.wiggle {
+  background: red;
+}
 .draggable-container {
   position: absolute;
 }
