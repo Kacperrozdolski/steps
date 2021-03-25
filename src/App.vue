@@ -1,18 +1,33 @@
 <template>
-  <steps-main :stepsData="stepsData"></steps-main>
+  <steps-welcome v-if="handler == 'welcome'"></steps-welcome>
+  <steps-app v-if="handler == 'steps'" :stepsData="stepsData"></steps-app>
 </template>
 
 <script>
-import StepsMain from "./components/StepsMain.vue";
+import StepsApp from "./components/StepsApp.vue";
+import StepsWelcome from "./components/StepsWelcome.vue";
 
 export default {
   name: "App",
   components: {
-    StepsMain,
+    StepsApp,
+    StepsWelcome,
   },
+  // beforeCreate() {
+  //   localStorage.removeItem("stepsData");
+  // },
   computed: {
     stepsData() {
       return localStorage.getItem("stepsData");
+    },
+    handler() {
+      let state;
+      if (this.stepsData == null) {
+        state = "welcome";
+      } else {
+        state = "steps";
+      }
+      return state;
     },
   },
 };
