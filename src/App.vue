@@ -13,9 +13,6 @@ export default {
     StepsApp,
     StepsWelcome,
   },
-  // beforeCreate() {
-  //   localStorage.removeItem("stepsData");
-  // },
   computed: {
     stepsData() {
       return localStorage.getItem("stepsData");
