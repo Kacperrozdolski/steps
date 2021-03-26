@@ -180,6 +180,7 @@ export default {
   z-index: 1;
   text-align: center;
   cursor: pointer;
+  resize: horizontal;
 }
 
 input:focus {

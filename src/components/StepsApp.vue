@@ -1,12 +1,11 @@
 <template :data="data">
-  <div class="steps-landing" ref="asd">
-    <img src="@/assets/logo.svg" class="logo" @click="remove" />
+  <div class="steps-landing">
+    <img src="@/assets/logo.svg" class="logo" />
     <div ref="capture">
       <div
         @contextmenu.prevent="openContextMenu"
         class="container"
         ref="container"
-        @mousemove="changeCursor"
       >
         <component
           v-for="element in elements"
@@ -84,7 +83,6 @@ export default {
       secondConnection: null,
       firstElementIndex: null,
       secondElementIndex: null,
-      changeWidth: false,
       css:
         "svg{stroke:#fff;stroke-width:4;width:100%;background:transparent;height:100%}body{margin:0!important}.steps-landing{min-height:150vh;width:100%;background:black;display:flex;position:relative;align-items:center;flex-direction:column}h1{color:white}.logo{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.container{width:900px;height:900px;background:black;display:flex;justify-content:center;align-items:center;position:relative;border:solid 4px white}.draggable-container{position:absolute}div:hover>menu{top:-35px}.genericNote{min-width:180px;min-height:90px;border:0;padding:0;text-decoration:none!important;position:relative;z-index:1;text-align:center;cursor:pointer}.genericNote:focus{outline:0}.genericNote::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}.draggable-container{position:absolute}div:hover>menu{top:-35px}.genericElement{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}.genericElement::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}line{cursor:pointer;position:absolute;background:transparent} .draggable-container{position:absolute}#menuText{top:-30px}.genericText{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}.genericText::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}",
     };
@@ -92,13 +90,12 @@ export default {
   methods: {
     openContextMenu(e) {
       this.$refs.menu.open(e);
-      console.log("Otworzyłem Menu");
     },
-    appendElement(e, b) {
+    appendElement(e, element) {
       let bounds = this.$refs.container.getBoundingClientRect();
       let left = e.clientX - bounds.left;
       let top = e.clientY - bounds.top;
-      if (b == "yellow") {
+      if (element == "yellow") {
         this.elements.push({
           id: this.id++,
           type: "GenericElement",
@@ -110,7 +107,7 @@ export default {
           content: "",
           placeholder: "Yellow",
         });
-      } else if (b == "green") {
+      } else if (element == "green") {
         this.elements.push({
           id: this.id++,
           type: "GenericElement",
@@ -122,7 +119,7 @@ export default {
           content: "",
           placeholder: "Green",
         });
-      } else if (b == "note") {
+      } else if (element == "note") {
         this.elements.push({
           id: this.id++,
           type: "GenericNote",
@@ -134,7 +131,7 @@ export default {
           content: "",
           placeholder: "Note",
         });
-      } else if (b == "text") {
+      } else if (element == "text") {
         this.elements.push({
           id: this.id++,
           type: "GenericText",
@@ -211,12 +208,6 @@ export default {
             },
           },
         });
-        console.log(
-          "Nawiązałem Połączenie między elementem o ID " +
-            this.firstConnection +
-            " a elementem " +
-            this.secondConnection
-        );
         this.save();
         this.firstConnection = null;
         this.secondConnection = null;
@@ -236,18 +227,14 @@ export default {
       }
       if (id == this.firstConnection) {
         this.firstConnection = null;
-        console.log("usunąłem element który był zaznaczony do połączenia");
       }
       this.save();
-      console.log("Usunąłem Element i wszystkie linie do niego połączone.");
     },
     save() {
       let stepsData = [this.elements, this.lines];
       localStorage.setItem("stepsData", JSON.stringify(stepsData));
-      console.log("zapisałem wszystko");
     },
     remove() {
-      console.log("Usuwam");
       localStorage.removeItem("stepsData");
       this.elements = [];
       this.id = 0;
@@ -297,14 +284,12 @@ export default {
       let element = this.elements.find((element) => element.id == id);
       let index = this.elements.indexOf(element);
       this.elements[index].color.bodyColor = color;
-      console.log(id, color);
       this.save();
     },
     changeTextcolor(id, color) {
       let element = this.elements.find((element) => element.id == id);
       let index = this.elements.indexOf(element);
       this.elements[index].color.textColor = color;
-      console.log(id, color);
       this.save();
     },
     removeLine(id) {
@@ -315,11 +300,10 @@ export default {
     },
   },
   mounted() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     let data = this.stepsData;
     data = JSON.parse(data);
-    if (data == null) {
-      console.log("Brak danych");
-    } else if (data[0] == 0) {
+    if (data == null || data[0] == 0) {
       console.log("Brak danych");
     } else {
       if (data[0].length != 0) {
@@ -354,6 +338,7 @@ body {
   position: relative;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
 }
 h1 {
   color: white;
@@ -405,8 +390,8 @@ h1 {
   justify-content: center;
 }
 .button-container button {
-  width: 150px;
-  height: 50px;
+  width: 130px;
+  height: 35px;
   cursor: pointer;
 }
 </style>

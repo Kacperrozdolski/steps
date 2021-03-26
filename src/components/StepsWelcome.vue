@@ -91,7 +91,7 @@
       </div>
       <div class="content-wrapper-hero">
         <p class="hero-paragraph">Are you ready? Let's go!</p>
-        <button @click="console">create</button>
+        <button @click="visited">create</button>
       </div>
     </div>
     <div class="footer-container">
@@ -108,7 +108,7 @@
 <script>
 export default {
   methods: {
-    console() {
+    visited() {
       this.$emit("visited");
     },
   },
@@ -141,7 +141,7 @@ h2 {
 }
 .container {
   height: auto;
-  width: 1000px;
+  max-width: 95vw;
   background: black;
   display: flex;
   justify-content: center;

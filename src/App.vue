@@ -14,9 +14,16 @@ export default {
       handler: "welcome",
     };
   },
-  methods:{
-    visited(){
-      this.handler = 'steps'
+  methods: {
+    visited() {
+      this.handler = "steps";
+    },
+  },
+  mounted() {
+    if (this.stepsData == null || JSON.parse(this.stepsData)[0].length == 0) {
+      this.handler = "welcome";
+    } else {
+      this.handler = "steps";
     }
   },
   components: {
