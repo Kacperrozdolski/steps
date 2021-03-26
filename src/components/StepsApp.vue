@@ -43,7 +43,8 @@
       </div>
     </div>
     <div class="button-container">
-      <button @click="createImage">export</button>
+      <button v-if="!loading" @click="createImage">export</button>
+      <div v-if="loading" class="loader"></div>
     </div>
     <div class="footer-container">
       <p>copyright © 2021 kacper rozdolski. all rights reserved.</p>
@@ -91,8 +92,9 @@ export default {
       secondConnection: null,
       firstElementIndex: null,
       secondElementIndex: null,
+      loading: false,
       css:
-        "svg{stroke:#fff;stroke-width:4;width:100%;background:transparent;height:100%}body{margin:0!important}.steps-landing{min-height:150vh;width:100%;background:black;display:flex;position:relative;align-items:center;flex-direction:column}h1{color:white}.logo{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.container{width:900px;height:900px;background:black;display:flex;justify-content:center;align-items:center;position:relative;border:solid 4px white}.draggable-container{position:absolute}div:hover>menu{top:-35px}.genericNote{min-width:180px;min-height:90px;border:0;padding:0;text-decoration:none!important;position:relative;z-index:1;text-align:center;cursor:pointer}.genericNote:focus{outline:0}.genericNote::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}.draggable-container{position:absolute}div:hover>menu{top:-35px}.genericElement{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}.genericElement::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}line{cursor:pointer;position:absolute;background:transparent} .draggable-container{position:absolute}#menuText{top:-30px}.genericText{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}.genericText::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}.colorInput{width:100%;height:50%;margin:0;display:flex;align-items:center;justify-content:space-evenly}.colorInput input{width:60%;height:23px;margin:0;background:#dfdfdf;border:0}.textColor{height:25px;width:25px}",
+        "svg{stroke:#fff;stroke-width:4;width:100%;background:transparent;height:100%}.container{height:900px;width:1000px;background:black;position:relative;border:solid 4px white}.genericElement{width:140px;height:60px;text-decoration:none!important;border:0;outline:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer}input:focus{outline:0}.genericElement::placeholder{color:var(--color)}menu{width:100%;height:35px;background:#fff;position:absolute;margin:0;transition:top .5s;top:0;padding:0;display:flex;justify-content:space-around;align-items:center}img{height:23px;cursor:pointer;user-select:none;-moz-user-select:none;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none}.palete{position:absolute;width:100%;height:60px;bottom:100%;margin:0;background:#fff}line{cursor:pointer;position:absolute;background:transparent}.genericNote{min-width:180px;min-height:90px;border:0;padding:0;text-decoration:none!important;position:relative;z-index:1;text-align:center;cursor:pointer}.genericNote:focus{outline:0}.genericNote::placeholder{color:var(--color)}.genericText::placeholder{color:var(--color)}.genericText{width:140px;height:60px;text-decoration:none!important;border:0;padding:0;position:relative;z-index:1;text-align:center;cursor:pointer;resize:horizontal}.draggable-container{position:absolute}#menuText{top:-30px}",
     };
   },
   methods: {
@@ -253,8 +255,10 @@ export default {
       this.id = 0;
       this.lines = [];
       this.lineId = 0;
+      window.scrollTo({ top: 0, behavior: "smooth" });
     },
     async createImage() {
+      this.loading = true;
       const payload = {
         html: this.$refs.capture.innerHTML,
         css: this.css,
@@ -290,6 +294,7 @@ export default {
         fileLink.href = fileURL;
         fileLink.setAttribute("download", "steps-image.jpg");
         document.body.appendChild(fileLink);
+        this.loading = false;
         fileLink.click();
       });
     },
@@ -378,9 +383,6 @@ h1 {
   height: 900px;
   width: 1000px;
   background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
   border: solid 4px white;
 }
@@ -468,6 +470,32 @@ h1 {
   }
   to {
     opacity: 1;
+  }
+}
+.loader {
+  border: 5px solid #dfdfdf;
+  border-radius: 50%;
+  border-top: 5px solid #00af91;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

@@ -10,19 +10,24 @@
         <div class="content-text">
           <p>
             Right clicking in the workspace frame opens up context menu which
-            allows you to create roadmap elements.
+            allows you to create roadmap elements. Right clicking on the
+            workspace frame opens up context menu which allows you to create
+            -steps- elements.
           </p>
         </div>
         <div class="content-image">
-          <img src="@/assets/StepsWelcome/contextmenu.svg" alt="" />
+          <img
+            src="@/assets/StepsWelcome/context.gif"
+            alt=""
+            class="smallGif"
+          />
         </div>
       </div>
       <div class="content-wrapper" ref="asd">
         <div class="content-text">
           <p>
-            First two options creates basic cells which are your main tools to
-            create amazing roadmap. Perfect choice for single word display of
-            text.
+            First two options are the same generic elements with diffrent
+            colors. They are perfect choice for displaying single word element.
           </p>
         </div>
         <div class="content-image">
@@ -32,9 +37,10 @@
       <div class="content-wrapper">
         <div class="content-text">
           <p>
-            Note option create bigger cell which can be used as a container for
-            bigger chunks of text. Their uniqe behavior is that if u grab it by
-            the right bottom corner u can resize it how ever you want.
+            Third option - Note element - creates element which is perfect
+            solution for multiline display of text. It's unique feature of
+            expanding is avillable in the right bottom corner. You can resize it
+            how ever you want.
           </p>
         </div>
         <div class="content-image">
@@ -44,9 +50,12 @@
       <div class="content-wrapper">
         <div class="content-text">
           <p>
-            Text element allows you to create cell which has default transparent
-            background. It’s a perfect solution for straight line paragraphs.
-            (frame is only in instruction)
+            Text element allows you to create cell which has a transparent
+            background. It's a perfect solution for longer single line
+            paragraphs.
+            <span style="font-size: 9px; color: #d3d3d3"
+              >(this white frame is visable only in instruction)</span
+            >
           </p>
         </div>
         <div class="content-image">
@@ -56,21 +65,90 @@
       <div class="content-wrapper">
         <div class="content-text">
           <p>
-            Every cell comes with menu which allows you to: perform certein
-            actions like: removing, changing color, creating realtion with other
-            element or change current postiton of an cell.
+            Every cell has it's own menu which allows you to perform some key
+            actions like: deleting element from workspace, changing element
+            text/body color, creating single line between elements & changing
+            current position of an element.
+            <span style="font-size: 9px; color: #d3d3d3"
+              >(hover on element)</span
+            >
           </p>
         </div>
         <div class="content-image">
-          <img src="@/assets/StepsWelcome/exampleMenu.svg" alt="" />
+          <img src="@/assets/StepsWelcome/menu.gif" class="smallGif" />
+        </div>
+      </div>
+      <div class="content-wrapper">
+        <div class="content-text">
+          <p>
+            To change color you have to pick second option is element menu. Then
+            type whatever HEX value you want. For example #9c3d54 or #BE0000.
+            <span style="font-size: 9px; color: #d3d3d3"
+              >(value has to be in HEX notation.)</span
+            >
+          </p>
+        </div>
+        <div class="content-image">
+          <img
+            src="@/assets/StepsWelcome/changecolor.gif"
+            class="smallGif"
+            alt=""
+          />
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <div class="content-text">
+          <p>
+            To connect elements click on the "network" icon on ONE element and
+            then click on the another element "network" icon. First selected
+            element will float.
+            <span style="font-size: 9px; color: #d3d3d3"
+              >(second click on the same element recall selection)</span
+            >
+          </p>
+        </div>
+        <div class="content-image">
+          <img src="@/assets/StepsWelcome/connect.gif" class="bigGif" />
+        </div>
+      </div>
+      <div class="content-wrapper">
+        <div class="content-text">
+          <p>
+            To delete line right click on one. Notice that deleting element with
+            attached lines will remove them as well.
+          </p>
+        </div>
+        <div class="content-image">
+          <img src="@/assets/StepsWelcome/deletingline.gif" class="bigGif" />
+        </div>
+      </div>
+      <div class="content-wrapper">
+        <div class="content-text">
+          <p>
+            To change element position hold your left click button on the
+            "localization" icon and then move your mouse to change element
+            position.
+            <span style="font-size: 9px; color: #d3d3d3"
+              >(be carefull with draging, there is possibility of throwing
+              element away)</span
+            >
+          </p>
+        </div>
+        <div class="content-image">
+          <img src="@/assets/StepsWelcome/drag.gif" class="bigGif" />
         </div>
       </div>
       <div class="content-wrapper">
         <div class="content-text">
           <p>
             After all the tweeking and adjusting press export button which will
-            convert workspace frame to image file. Be carefully everything will
-            be capture exacly how you placed it.
+            convert - workspace frame - to image file and then automaticly
+            download. Carefully everything will be capture <b>exacly</b> how you
+            placed it.
+            <span style="font-size: 9px; color: #d3d3d3"
+              >(exacly means exacly)</span
+            >
           </p>
         </div>
         <div class="content-image">
@@ -80,9 +158,9 @@
       <div class="content-wrapper">
         <div class="content-text">
           <p>
-            Oh yes! I almost forgot dont worry about constantly saving
-            everything every 3 minute. This procces is automated so feel free to
-            leave project and return when ever you want.
+            Oh yes! Don't worry about constant necessity to save. This process
+            is automated. So feel free to leave project close browser and return
+            to it when ever you want.
           </p>
         </div>
         <div class="content-image">
@@ -121,13 +199,12 @@ body {
 }
 h1 {
   font-size: 60px;
-  margin: 0px 0px 0px 0px;
+  margin: 20px 0px 0px 0px;
   text-align: center;
 }
 h2 {
   font-size: 20px;
   color: rgb(97, 97, 97);
-  margin: 0 0 30px 0;
   font-weight: 300;
 }
 .steps-landing {
@@ -156,6 +233,7 @@ h2 {
   color: white;
   display: flex;
   align-items: center;
+  margin: 10px 0px;
 }
 .content-text {
   width: 60%;
@@ -205,5 +283,12 @@ h2 {
 }
 .footer-container > p {
   text-align: center;
+}
+
+.bigGif {
+  width: 80%;
+}
+.smallGif {
+  width: 60%;
 }
 </style>
