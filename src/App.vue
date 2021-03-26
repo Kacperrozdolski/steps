@@ -1,5 +1,5 @@
 <template>
-  <steps-welcome v-if="handler == 'welcome'"></steps-welcome>
+  <steps-welcome v-if="handler == 'welcome'" @visited="visited"></steps-welcome>
   <steps-app v-if="handler == 'steps'" :stepsData="stepsData"></steps-app>
 </template>
 
@@ -9,6 +9,16 @@ import StepsWelcome from "./components/StepsWelcome.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      handler: "welcome",
+    };
+  },
+  methods:{
+    visited(){
+      this.handler = 'steps'
+    }
+  },
   components: {
     StepsApp,
     StepsWelcome,
@@ -16,15 +26,6 @@ export default {
   computed: {
     stepsData() {
       return localStorage.getItem("stepsData");
-    },
-    handler() {
-      let state;
-      if (this.stepsData == null) {
-        state = "welcome";
-      } else {
-        state = "steps";
-      }
-      return state;
     },
   },
 };

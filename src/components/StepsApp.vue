@@ -7,10 +7,6 @@
         class="container"
         ref="container"
         @mousemove="changeCursor"
-        :style="{
-          cursor: changeWidth ? 'w-resize' : '',
-          width: containerWidth + 'px',
-        }"
       >
         <component
           v-for="element in elements"
@@ -40,6 +36,17 @@
         </svg>
       </div>
     </div>
+    <div class="button-container">
+      <button @click="createImage">export</button>
+    </div>
+    <div class="footer-container">
+      <p>copyright © 2021 kacper rozdolski. all rights reserved.</p>
+      <div class="footer-wrapper">
+        <img src="@/assets/mail.svg" />
+        <img src="@/assets/linkedin.svg" />
+        <img src="@/assets/github.svg" />
+      </div>
+    </div>
     <context-menu
       class="contextMenu"
       :display="showContextMenu"
@@ -54,11 +61,17 @@ import ContextMenu from "./input/ContextMenu";
 import GenericElement from "./input/GenericElement";
 import GenericLine from "./input/GenericLine";
 import GenericNote from "./input/GenericNote";
-import GenericText from "./input/GenericText"
+import GenericText from "./input/GenericText";
 
 export default {
   name: "StepsMain",
-  components: { ContextMenu, GenericElement, GenericLine, GenericNote, GenericText },
+  components: {
+    ContextMenu,
+    GenericElement,
+    GenericLine,
+    GenericNote,
+    GenericText,
+  },
   props: ["stepsData"],
   data() {
     return {
@@ -359,12 +372,41 @@ h1 {
 }
 .container {
   height: 900px;
-  max-width: 95vw;
+  width: 1000px;
   background: black;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   border: solid 4px white;
+}
+.footer-container {
+  height: 200px;
+  width: 100%;
+  color: #e7d9ea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.footer-container img {
+  margin: 10px;
+}
+.footer-container > p {
+  text-align: center;
+}
+.button-container {
+  width: 100%;
+  height: 20vh;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.button-container button {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
 }
 </style>

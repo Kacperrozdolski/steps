@@ -2,20 +2,22 @@
   <div class="steps-landing">
     <img src="@/assets/logo.svg" alt="" />
     <div class="container">
-      <h1>STEPS</h1>
-      <h2>browser tool for creating simple roadmaps.</h2>
+      <div>
+        <h1>STEPS</h1>
+        <h2>browser tool for creating simple roadmaps.</h2>
+      </div>
       <div class="content-wrapper">
         <div class="content-text">
           <p>
-            Right clicking in the workspace frame opens up context menu which allows
-            you to create roadmap elements.
+            Right clicking in the workspace frame opens up context menu which
+            allows you to create roadmap elements.
           </p>
         </div>
         <div class="content-image">
           <img src="@/assets/StepsWelcome/contextmenu.svg" alt="" />
         </div>
       </div>
-      <div class="content-wrapper">
+      <div class="content-wrapper" ref="asd">
         <div class="content-text">
           <p>
             First two options creates basic cells which are your main tools to
@@ -87,15 +89,30 @@
           <img src="@/assets/StepsWelcome/saveIcon.svg" alt="" />
         </div>
       </div>
-      <div class="content-wrapper">
+      <div class="content-wrapper-hero">
         <p class="hero-paragraph">Are you ready? Let's go!</p>
+        <button @click="console">create</button>
+      </div>
+    </div>
+    <div class="footer-container">
+      <p>copyright © 2021 kacper rozdolski. all rights reserved.</p>
+      <div class="footer-wrapper">
+        <img src="@/assets/mail.svg" />
+        <img src="@/assets/linkedin.svg" />
+        <img src="@/assets/github.svg" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    console() {
+      this.$emit("visited");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -104,7 +121,8 @@ body {
 }
 h1 {
   font-size: 60px;
-  margin: 40px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  text-align: center;
 }
 h2 {
   font-size: 20px;
@@ -113,7 +131,7 @@ h2 {
   font-weight: 300;
 }
 .steps-landing {
-  min-height: 150vh;
+  min-height: auto;
   width: 100%;
   background: black;
   display: flex;
@@ -122,8 +140,8 @@ h2 {
   flex-direction: column;
 }
 .container {
-  min-height: 1300px;
-  width: 900px;
+  height: auto;
+  width: 1000px;
   background: black;
   display: flex;
   justify-content: center;
@@ -141,7 +159,7 @@ h2 {
 }
 .content-text {
   width: 60%;
-  min-height: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,13 +169,41 @@ h2 {
 }
 .content-image {
   width: 40%;
-  min-height: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .hero-paragraph {
   width: 100%;
+  text-align: center;
+}
+.content-wrapper-hero {
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.content-wrapper-hero button {
+  width: 100px;
+  cursor: pointer;
+  margin-bottom: 50px;
+}
+.footer-container {
+  height: 200px;
+  width: 100%;
+  color: #e7d9ea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.footer-container img {
+  margin: 10px;
+}
+.footer-container > p {
   text-align: center;
 }
 </style>
