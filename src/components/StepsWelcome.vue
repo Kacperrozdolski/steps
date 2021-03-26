@@ -3,7 +3,7 @@
     <img src="@/assets/logo.svg" alt="" />
     <div class="container">
       <h1>STEPS</h1>
-      <h2>webtool for creating simple roadmap.</h2>
+      <h2>browser tool for creating simple roadmaps.</h2>
       <div class="content-wrapper">
         <div class="content-text">
           <p>
@@ -109,7 +109,7 @@ h1 {
 h2 {
   font-size: 20px;
   color: rgb(97, 97, 97);
-  margin: 0 0 50px 0;
+  margin: 0 0 30px 0;
   font-weight: 300;
 }
 .steps-landing {
@@ -140,7 +140,7 @@ h2 {
   align-items: center;
 }
 .content-text {
-  width: 65%;
+  width: 60%;
   min-height: 100%;
   display: flex;
   align-items: center;
@@ -150,7 +150,7 @@ h2 {
   width: 85%;
 }
 .content-image {
-  width: 50%;
+  width: 40%;
   min-height: 100%;
   display: flex;
   align-items: center;
