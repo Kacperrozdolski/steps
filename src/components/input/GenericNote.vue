@@ -79,7 +79,7 @@ export default {
   methods: {
     untoggleHover() {
       this.hover = false;
-      this.palete = false
+      this.palete = false;
     },
     toggleHover() {
       this.hover = true;
@@ -162,6 +162,24 @@ export default {
 </script>
 
 <style scoped>
+.floating {
+  animation-name: floating;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 5px);
+  }
+  100% {
+    transform: translate(0, 0px);
+  }
+}
 .draggable-container {
   position: absolute;
 }

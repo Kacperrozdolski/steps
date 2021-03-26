@@ -1,6 +1,12 @@
 <template :data="data">
   <div class="steps-landing">
     <img src="@/assets/logo.svg" class="logo" />
+    <div v-if="width < 700" class="error-container fadein">
+      <div class="error-popup">
+        <img src="@/assets/error.png" alt="" />
+        <p>This tool isn't adepted to be used on smaller devices.</p>
+      </div>
+    </div>
     <div ref="capture">
       <div
         @contextmenu.prevent="openContextMenu"
@@ -33,6 +39,7 @@
             @removeLine="removeLine"
           ></component>
         </svg>
+        <p class="remove-button" @click="remove">delete project</p>
       </div>
     </div>
     <div class="button-container">
@@ -78,6 +85,7 @@ export default {
       elements: [],
       id: 0,
       lines: [],
+      width: 0,
       lineId: 0,
       firstConnection: null,
       secondConnection: null,
@@ -181,14 +189,19 @@ export default {
         let index = this.elements.indexOf(element);
         this.firstElementIndex = index;
         this.firstConnection = id;
-        console.log(this.firstConnection, this.secondConnection);
+        document.getElementById(id).classList.add("floating");
       } else if (this.firstConnection == id) {
+        document
+          .getElementById(this.firstConnection)
+          .classList.remove("floating");
         this.firstConnection = null;
-        console.log(this.firstConnection, this.secondConnection);
       } else if (
         (this.firstConnection != null) &
         (this.firstConnection != id)
       ) {
+        document
+          .getElementById(this.firstConnection)
+          .classList.remove("floating");
         let element = this.elements.find((element) => element.id == id);
         let index = this.elements.indexOf(element);
         this.secondElementIndex = index;
@@ -298,8 +311,14 @@ export default {
       this.lines.splice(index, 1);
       this.save();
     },
+    handleResize() {
+      this.width = window.innerWidth;
+    },
   },
   mounted() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+    console.log();
     window.scrollTo({ top: 0, behavior: "smooth" });
     let data = this.stepsData;
     data = JSON.parse(data);
@@ -365,6 +384,11 @@ h1 {
   position: relative;
   border: solid 4px white;
 }
+@media only screen and (max-width: 1100px) {
+  .container {
+    width: 91vw;
+  }
+}
 .footer-container {
   height: 200px;
   width: 100%;
@@ -393,5 +417,57 @@ h1 {
   width: 130px;
   height: 35px;
   cursor: pointer;
+}
+.remove-button {
+  position: absolute;
+  bottom: -35px;
+  font-weight: 200;
+  right: 0;
+  font-size: 10px;
+  cursor: pointer;
+  color: grey;
+  z-index: 0;
+}
+.error-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  background: rgba(0, 0, 0, 0.7);
+  flex-direction: column;
+  align-items: center;
+}
+.error-popup {
+  margin-top: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  width: 100%;
+}
+.error-popup img {
+  width: 75vw;
+}
+.error-popup p {
+  font-size: 12px;
+  width: 70%;
+  text-align: center;
+}
+.fadein {
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+  -ms-animation: fadein 2s; /* Internet Explorer */
+  -o-animation: fadein 2s; /* Opera < 12.1 */
+  animation: fadein 2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

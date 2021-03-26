@@ -158,8 +158,23 @@ export default {
 </script>
 
 <style scoped>
-.wiggle {
-  background: red;
+.floating {
+  animation-name: floating;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 5px);
+  }
+  100% {
+    transform: translate(0, 0px);
+  }
 }
 .draggable-container {
   position: absolute;
@@ -172,6 +187,7 @@ div:hover > menu {
   height: 60px;
   text-decoration: none !important;
   border: 0;
+  outline: 0;
   padding: 0;
   position: relative;
   z-index: 1;

@@ -17,6 +17,7 @@
         background: color.bodyColor,
         color: color.textColor,
         border: hover ? '1px solid white' : 'none',
+        width: content.length == 0 ? 140+ 'px' : (140 + (content.length * 6)) + 'px',
       }"
       style="--color:{{color.bodyColor}}"
     />
@@ -122,7 +123,7 @@ export default {
         this.$refs.draggableContainer.offsetTop - this.positions.movementY;
       let id = this.$refs.draggableContainer.id;
       this.$emit("changePosition", id, top, left);
-      this.toggleHover()
+      this.toggleHover();
     },
     closeDragElement() {
       document.onmouseup = null;
