@@ -157,8 +157,8 @@
         <div class="content-text">
           <p>
             Oh yes! Don't worry about constant necessity to save. This process
-            is automated. So feel free to leave project close browser and return
-            to it when ever you want.
+            is automated. So feel free to leave project and return to it when
+            ever you want.
           </p>
         </div>
         <div class="content-image">
@@ -173,9 +173,17 @@
     <div class="footer-container">
       <p>copyright © 2021 kacper rozdolski. all rights reserved.</p>
       <div class="footer-wrapper">
-        <img src="@/assets/mail.svg" />
-        <img src="@/assets/linkedin.svg" />
-        <img src="@/assets/github.svg" />
+        <a href="mailto:leopoldsinx@gmail.com"
+          ><img src="@/assets/mail.svg"
+        /></a>
+        <a
+          href="https://www.linkedin.com/in/kacper-rozdolski-ba6a4715b/"
+          target="_blank"
+          ><img src="@/assets/linkedin.svg"
+        /></a>
+        <a href="https://github.com/Kacperrozdolski" target="_blank"
+          ><img src="@/assets/github.svg"
+        /></a>
       </div>
     </div>
   </div>
@@ -288,5 +296,30 @@ h2 {
 }
 .smallGif {
   width: 60%;
+}
+
+@media only screen and (max-width: 750px) {
+  .container > div > h2 {
+    text-align: center;
+  }
+  .content-wrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+  .content-text {
+    width: 80%;
+  }
+  .content-image {
+    width: 50%;
+    height: 100%;
+  }
+  .smallGif {
+    width: 100%;
+    height: 100%;
+  }
+  .bigGif {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

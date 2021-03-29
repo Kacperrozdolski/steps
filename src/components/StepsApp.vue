@@ -51,9 +51,9 @@
     <div class="footer-container">
       <p>copyright © 2021 kacper rozdolski. all rights reserved.</p>
       <div class="footer-wrapper">
-        <img src="@/assets/mail.svg" />
-        <img src="@/assets/linkedin.svg" />
-        <img src="@/assets/github.svg" />
+        <a href="mailto:leopoldsinx@gmail.com"><img src="@/assets/mail.svg" /></a>
+        <a href="https://www.linkedin.com/in/kacper-rozdolski-ba6a4715b/" target="_blank"><img src="@/assets/linkedin.svg" /></a>
+        <a href="https://github.com/Kacperrozdolski" target="_blank"><img src="@/assets/github.svg" /></a>
       </div>
     </div>
     <context-menu
@@ -397,6 +397,7 @@ h1 {
 @media only screen and (max-width: 1100px) {
   .container {
     width: 91vw;
+    height: 400px;
   }
 }
 .footer-container {
