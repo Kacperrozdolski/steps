@@ -9,6 +9,8 @@
     <textarea
       class="genericNote"
       spellcheck="false"
+      @focus="inputFocused"
+      @blur="inputBlur"
       @input="changeContenet"
       :placeholder="content == '' ? 'note' : content"
       :value="content"
@@ -157,6 +159,15 @@ export default {
       let content = $event.path[0].value;
       this.$emit("changeContent", id, content);
     },
+    inputFocused($event) {
+      console.log($event)
+      let id = $event.path[1].id;
+      this.$emit("stackHighest", id);
+    },
+    inputBlur($event) {
+      let id = $event.path[1].id;
+      this.$emit("stackNormaly", id);
+    },
   },
 };
 </script>
@@ -204,6 +215,7 @@ div:hover > menu {
 .genericNote::placeholder {
   color: var(--color);
 }
+
 menu {
   width: 100%;
   height: 35px;
@@ -252,5 +264,8 @@ img {
 .textColor {
   height: 25px;
   width: 25px;
+}
+.highestIndex {
+  z-index: 99;
 }
 </style>

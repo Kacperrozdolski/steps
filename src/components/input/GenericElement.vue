@@ -6,6 +6,8 @@
     :id="id"
   >
     <input
+      @focus="inputFocused"
+      @blur="inputBlur"
       class="genericElement"
       spellcheck="false"
       type="text"
@@ -123,7 +125,6 @@ export default {
       document.onmousemove = null;
     },
     togglePalete() {
-      console.log("asd");
       this.palete = !this.palete;
     },
     paleteLeave() {
@@ -153,6 +154,14 @@ export default {
         console.log("TO NIE JE HEX WALUE");
       }
     },
+    inputFocused($event) {
+      let id = $event.path[1].id;
+      this.$emit("stackHighest",id)
+    },
+    inputBlur($event) {
+      let id = $event.path[1].id;
+      this.$emit("stackNormaly",id)
+    },
   },
 };
 </script>
@@ -170,7 +179,7 @@ export default {
     transform: translate(0, 0px);
   }
   50% {
-    transform: translate(0, 5px);
+    transform: translate(0, 15px);
   }
   100% {
     transform: translate(0, 0px);
@@ -249,5 +258,8 @@ img {
 .textColor {
   height: 25px;
   width: 25px;
+}
+.highestIndex {
+  z-index: 99;
 }
 </style>

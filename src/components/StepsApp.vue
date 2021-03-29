@@ -28,6 +28,8 @@
           @changeBodycolor="changeBodycolor"
           @changeTextcolor="changeTextcolor"
           @changeContent="changeContent"
+          @stackHighest="stackHighest"
+          @stackNormaly="stackNormaly"
         ></component>
         <svg>
           <component
@@ -319,6 +321,12 @@ export default {
     handleResize() {
       this.width = window.innerWidth;
     },
+    stackHighest(id) {
+      document.getElementById(id).classList.add("highestIndex");
+    },
+    stackNormaly(id){
+      document.getElementById(id).classList.remove("highestIndex")
+    }
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);

@@ -9,10 +9,8 @@
       <div class="content-wrapper">
         <div class="content-text">
           <p>
-            Right clicking in the workspace frame opens up context menu which
-            allows you to create roadmap elements. Right clicking on the
-            workspace frame opens up context menu which allows you to create
-            -steps- elements.
+            Right clicking on the workspace frame opens up context menu which
+            allows you to create <i>Steps</i> elements.
           </p>
         </div>
         <div class="content-image">
