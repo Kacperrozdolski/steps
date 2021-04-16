@@ -51,9 +51,17 @@
     <div class="footer-container">
       <p>copyright © 2021 kacper rozdolski. all rights reserved.</p>
       <div class="footer-wrapper">
-        <a href="mailto:leopoldsinx@gmail.com"><img src="@/assets/mail.svg" /></a>
-        <a href="https://www.linkedin.com/in/kacper-rozdolski-ba6a4715b/" target="_blank"><img src="@/assets/linkedin.svg" /></a>
-        <a href="https://github.com/Kacperrozdolski" target="_blank"><img src="@/assets/github.svg" /></a>
+        <a href="mailto:leopoldsinx@gmail.com"
+          ><img src="@/assets/mail.svg"
+        /></a>
+        <a
+          href="https://www.linkedin.com/in/kacper-rozdolski-ba6a4715b/"
+          target="_blank"
+          ><img src="@/assets/linkedin.svg"
+        /></a>
+        <a href="https://github.com/Kacperrozdolski" target="_blank"
+          ><img src="@/assets/github.svg"
+        /></a>
       </div>
     </div>
     <context-menu
@@ -324,9 +332,9 @@ export default {
     stackHighest(id) {
       document.getElementById(id).classList.add("highestIndex");
     },
-    stackNormaly(id){
-      document.getElementById(id).classList.remove("highestIndex")
-    }
+    stackNormaly(id) {
+      document.getElementById(id).classList.remove("highestIndex");
+    },
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -487,18 +495,9 @@ h1 {
   border-top: 5px solid #00af91;
   width: 20px;
   height: 20px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
+  -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
